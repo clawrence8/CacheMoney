@@ -8,7 +8,7 @@ package edu.gatech.oad.antlab.person;
  *  @author Bob
  *  @version 1.1
  */
-public class Person1 {
+public class Person1 { //Clayton Lawrence
   /** Holds the persons real name */
   private String name;
   	/**
@@ -30,8 +30,9 @@ public class Person1 {
 	 * @return the modified string
 	 */
 	private String calc(String input) {
-	  //Person 1 put your implementation here
-	  return null;
+
+
+	  return input.substring(2, input.length()) + input.substring(0,2);
 	}
 	
 	/**
