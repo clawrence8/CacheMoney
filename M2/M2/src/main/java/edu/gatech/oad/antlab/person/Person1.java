@@ -31,7 +31,6 @@ public class Person1 { //Clayton Lawrence
 	 */
 	private String calc(String input) {
 
-
 	  return input.substring(2, input.length()) + input.substring(0,2);
 	}
 	
