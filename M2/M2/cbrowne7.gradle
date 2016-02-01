@@ -1,0 +1,27 @@
+//Set a default task, so if you don't provide any, these will be executed.
+defaultTasks 'jar'
+//Import a bunch of Java related tasks to help you
+//By default production code should be in src/main/java
+apply plugin: 'java'
+//set up some variables
+sourceCompatibility = 1.8
+version = '1.0'
+//Define the contents of the jar file class path attribute point at resurouces.jar
+jar  {
+  manifest {
+     attributes  'Implementation-Title' : 'M2' ,
+                 'Implementation-Version' : version,
+                 'Main-Class' : 'edu.gatech.oad.antlab.pkg1.AntLabMain',
+		  'Class-Path' : 'lib/resources.jar'
+		   
+    }
+    destinationDir = file(".")
+    archiveName = 'cbrowne7.jar'
+} 
+dependencies {
+    compile files('lib/resources.jar')
+}
+//setup a location for repositories of any libraries that need to be downloaded
+repositories {
+   mavenCentral()
+}
