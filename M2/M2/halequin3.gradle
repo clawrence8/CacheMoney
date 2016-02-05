@@ -1,0 +1,32 @@
+//Default task which is executed when no task is specified
+defaultTasks 'jar'
+
+//Import Java tasks to help you
+//The production code should be in src/main/java
+apply plugin: 'java'
+
+//Set variables
+sourceCompatibility = 1.8
+version = '1.0'
+
+//Define contents of jar file and have class path attribute point at resources.jar
+jar  {
+  manifest {
+     attributes  'Implementation-Title' : 'M2' ,
+                 'Implementation-Version' : version,
+                 'Main-Class' : 'edu.gatech.oad.antlab.pkg1.AntLabMain',
+                 'Class-Path' : 'lib/resources.jar'
+       
+    }
+    destinationDir = file(".")
+    archiveName = 'halequin3.jar'
+} 
+
+dependencies {
+    compile files('lib/resources.jar')
+}
+
+//Set location for repos of any libs that have to be downloaded
+repositories {
+   mavenCentral()
+}
