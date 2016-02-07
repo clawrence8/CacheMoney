@@ -9,8 +9,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:spinnerMode="dropdown"
-        android:entries="@array/spinnerList"
-        android:layout_below="@+id/view" />
+        android:entries="@array/spinnerList" />
+
+    <!--android:layout_below="@+id/view"-->
 
 
 </RelativeLayout>

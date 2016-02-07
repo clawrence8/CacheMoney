@@ -12,7 +12,7 @@ import android.widget.Toast;
 import android.content.Context;
 import android.widget.Button;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
