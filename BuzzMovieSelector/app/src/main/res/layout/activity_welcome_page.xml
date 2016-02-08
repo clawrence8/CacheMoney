@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal|center_vertical"
+    android:orientation="vertical">
 
-    <Button
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/login"
-        android:onClick= "onLoginButtonClicked"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="181dp" />
+        android:foregroundGravity="center"
+        android:id="@+id/app_title_image"
+        android:src="@drawable/ic_app_name_text"/>
 
-    <Button
+    <ImageView
+        android:layout_width="91dp"
+        android:layout_height="91dp"
+        android:foregroundGravity="center"
+        android:id="@+id/app_icon_image"
+        android:src="@drawable/ic_film_icon"
+        android:layout_margin="30dp"/>
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/cancel"
-        android:layout_alignTop="@+id/login"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp" />
-</RelativeLayout>
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:id="@+id/login"
+            android:onClick= "onLoginButtonClicked" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:id="@+id/cancel" />
+
+    </LinearLayout>
+
+</LinearLayout>
