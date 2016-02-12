@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/SysAdmin/Documents/GTClasses/GT2ndYearSpring2016/CS2340/SemesterProject/CacheMoney/BuzzMovieSelector/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/Users/SysAdmin/Documents/GTClasses/GT2ndYearSpring2016/CS2340/SemesterProject/CacheMoney/BuzzMovieSelector/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+    },
+    {
+        "merged": "/Users/SysAdmin/Documents/GTClasses/GT2ndYearSpring2016/CS2340/SemesterProject/CacheMoney/BuzzMovieSelector/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/SysAdmin/Documents/GTClasses/GT2ndYearSpring2016/CS2340/SemesterProject/CacheMoney/BuzzMovieSelector/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+    }
+]
