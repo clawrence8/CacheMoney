@@ -29,8 +29,17 @@ public class WelcomePageActivity extends AppCompatActivity {
             }
         });
 
+        Button register = (Button) findViewById(R.id.register);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent registerIntent = new Intent(WelcomePageActivity.this, RegistrationActivity.class);
+                startActivity(registerIntent);
+            }
+        });
+
         UserManager forNow = new UserManager();
-        forNow.addUser("user", "pass");
+
     }
 
     @Override

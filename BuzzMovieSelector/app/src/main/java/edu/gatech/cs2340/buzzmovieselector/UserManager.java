@@ -9,13 +9,14 @@ import java.util.Map;
 public class UserManager implements AuthenticationMeasure {
 
     private static Map<String, User> usersList = new HashMap<>();
+    private static UserManager manager;
     private User currentUser;
     private int userCount;
 
-    public void addUser(String name, String pass) {
-        User user = new User(name, pass);
-        usersList.put(name, user);
+    public void addUser(User newUser) {
+        usersList.put(newUser.getName(), newUser);
         userCount++;
+        setCurrentUser(newUser);
     }
 
     public void UserManager(User currentUser) {
@@ -44,6 +45,7 @@ public class UserManager implements AuthenticationMeasure {
     }
 
     public boolean handleLoginAttempt(String name, String pass) {
+
         User u = findUserById(name);
         if (u == null) return false;
         return u.checkPassword(pass);

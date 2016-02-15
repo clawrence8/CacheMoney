@@ -25,17 +25,15 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/action_sign_in_short">
-
-        </activity>
-
+            android:label="@string/action_sign_in_short"></activity>
         <activity
             android:name=".HomePageActivity"
             android:label="@string/title_activity_home_page"
             android:noHistory="true"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".RegistrationActivity"
+            android:label="Create Your Profile"></activity>
     </application>
 
 </manifest>
