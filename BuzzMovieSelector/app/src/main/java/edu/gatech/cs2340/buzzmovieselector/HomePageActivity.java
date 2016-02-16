@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Spinner;
 import java.util.ArrayList;
@@ -16,76 +19,45 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 
-public class HomePageActivity extends AppCompatActivity implements OnItemSelectedListener {
+public class HomePageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        List<String> list = new ArrayList<String>();
-        list.add("Account");
-        list.add("License Agreement");
-        list.add("About Us");
-        list.add("Contact Us");
-        list.add("Logout");
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item,list);
-
-        dataAdapter.setDropDownViewResource
-                (android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(dataAdapter);
-
-        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                if (item == "Logout") {
-                    onLogoutItemPressed(view);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-//        addListenerOnButton();
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
-//    public void onLogoutButtonClicked(View view) {
-//
-//    }
-
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_welcome_page, menu);
+        return true;
     }
 
-    public void onLogoutItemPressed(View view) {
-        Intent intent = new Intent(this, WelcomePageActivity.class);
-        startActivity(intent);
-    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
+        //noinspection SimplifiableIfStatement
+        switch (id){
+            case R.id.menu_my_profile:
+                //Chez, uncomment the code below to get to your profile page.
+                Intent profileIntent = new Intent(HomePageActivity.this, ProfilePageActivity.class);
+                startActivity(profileIntent);
+                return true;
+
+            case R.id.logout:
+                Intent intent = new Intent(this, WelcomePageActivity.class);
+                startActivity(intent);
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

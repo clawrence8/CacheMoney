@@ -37,12 +37,12 @@
         <activity
             android:name=".ProfilePageActivity"
             android:label="@string/myProfile"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".HomePageActivity"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".ProfilePageActivity"></activity>
     </application>
 
 </manifest>
