@@ -25,15 +25,24 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/action_sign_in_short"></activity>
+            android:label="@string/action_sign_in_short" />
         <activity
             android:name=".HomePageActivity"
             android:label="@string/title_activity_home_page"
             android:noHistory="true"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".RegistrationActivity"
-            android:label="Create Your Profile"></activity>
+            android:label="Create Your Profile" />
+        <activity
+            android:name=".ProfilePageActivity"
+            android:label="@string/myProfile"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".HomePageActivity"/>
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_edit_profile"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

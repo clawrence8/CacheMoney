@@ -47,7 +47,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 String interests = mInterestEditText.getText().toString();
 
                 User newUser = new User(name, gtid, email, password, major, gender, interests);
-                new UserManager().addUser(newUser);
+                UserManager2.getInstance().addUser(newUser);
 
                 Intent homePageIntent = new Intent(RegistrationActivity.this, HomePageActivity.class);
                 startActivity(homePageIntent);
