@@ -28,7 +28,6 @@ public class HomePageActivity extends AppCompatActivity implements OnItemSelecte
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         List<String> list = new ArrayList<String>();
         list.add("Account");
-        list.add("Profile");
         list.add("License Agreement");
         list.add("About Us");
         list.add("Contact Us");
@@ -48,8 +47,6 @@ public class HomePageActivity extends AppCompatActivity implements OnItemSelecte
                 String item = parent.getItemAtPosition(position).toString();
                 if (item == "Logout") {
                     onLogoutItemPressed(view);
-                } else if (item == "Profile") {
-                    onProfileItemPressed(view);
                 }
             }
 
@@ -84,12 +81,6 @@ public class HomePageActivity extends AppCompatActivity implements OnItemSelecte
 
     public void onLogoutItemPressed(View view) {
         Intent intent = new Intent(this, WelcomePageActivity.class);
-        startActivity(intent);
-    }
-
-    // This takes the user to their profile page
-    public void onProfileItemPressed(View view) {
-        Intent intent = new Intent(HomePageActivity.this, ProfilePageActivity.class);
         startActivity(intent);
     }
 
