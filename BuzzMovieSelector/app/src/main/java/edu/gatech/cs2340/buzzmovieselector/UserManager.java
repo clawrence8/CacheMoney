@@ -4,14 +4,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by naudghebre on 2/5/16.
+ * Created by SysAdmin on 2/16/16.
  */
 public class UserManager implements AuthenticationMeasure {
-
+    private static UserManager ourInstance = null;
     private static Map<String, User> usersList = new HashMap<>();
-    private static UserManager manager;
     private User currentUser;
     private int userCount;
+
+    public static UserManager getInstance() {
+        if (ourInstance == null) {
+            ourInstance = new UserManager();
+        }
+        return ourInstance;
+    }
+
+    private UserManager() {
+    }
+
+    private UserManager(User user) {
+        this.currentUser = user;
+    }
 
     public void addUser(User newUser) {
         usersList.put(newUser.getName(), newUser);
@@ -19,9 +32,6 @@ public class UserManager implements AuthenticationMeasure {
         setCurrentUser(newUser);
     }
 
-    public void UserManager(User currentUser) {
-        this.currentUser = currentUser;
-    }
 
     public void removeUser(User user) {
         usersList.remove(user);

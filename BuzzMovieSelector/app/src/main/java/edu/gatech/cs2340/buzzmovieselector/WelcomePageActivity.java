@@ -38,7 +38,7 @@ public class WelcomePageActivity extends AppCompatActivity {
             }
         });
 
-        UserManager forNow = new UserManager();
+
 
     }
 
