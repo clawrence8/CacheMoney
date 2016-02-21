@@ -1,25 +1,15 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -52,7 +42,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_edit_profile);
 
 
-        User currentUser = UserManager2.getInstance().retrieveCurrentUser();
+        User currentUser = UserManager.getInstance().retrieveCurrentUser();
 
         mNameEditText = (EditText) findViewById(R.id.name_edit_text);
         mGtidEditText = (EditText) findViewById(R.id.gtid_edit_text);
@@ -85,7 +75,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 String major = mMajorEditText.getText().toString();
                 String gender = mGenderEditText.getText().toString();
                 String interests = mInterestEditText.getText().toString();
-                User currentUser = UserManager2.getInstance().retrieveCurrentUser();
+                User currentUser = UserManager.getInstance().retrieveCurrentUser();
 
                 currentUser.setName(name);
                 currentUser.setGtid(gtid);
