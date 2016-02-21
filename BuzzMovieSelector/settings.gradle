@@ -1,2 +1,2 @@
-include ':app', ':volley2'
-project(':volley2').projectDir = new File('volley')
+include ':app', ':volley'
+project(':volley').projectDir = new File('volley')
