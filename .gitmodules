@@ -1,0 +1,3 @@
+[submodule "BuzzMovieSelector/volley"]
+	path = BuzzMovieSelector/volley
+	url = https://android.googlesource.com/platform/frameworks/volley
