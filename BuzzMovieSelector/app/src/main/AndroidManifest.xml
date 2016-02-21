@@ -41,8 +41,9 @@
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".ProfilePageActivity"></activity>
+            android:parentActivityName=".ProfilePageActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>
