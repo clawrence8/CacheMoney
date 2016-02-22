@@ -45,14 +45,21 @@
             android:label="@string/title_activity_edit_profile"
             android:parentActivityName=".ProfilePageActivity"
             android:theme="@style/AppTheme" />
-
         <activity android:name=".SearchActivity">
 
         </activity>
-
-        <activity android:name=".ItemListActivity"
+        <activity
+            android:name=".ItemListActivity"
             android:label="Item List"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".NewReleases"
+            android:label="@string/title_activity_new_releases"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewDVDs"
+            android:label="@string/title_activity_new_dvds"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

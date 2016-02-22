@@ -163,7 +163,7 @@ public class ItemListActivity extends AppCompatActivity {
 
             @Override
             public String toString() {
-                return "hey";
+                return "Movies";
                // return super.toString() + " '" + mContentView.getText() + "'";
             }
         }
