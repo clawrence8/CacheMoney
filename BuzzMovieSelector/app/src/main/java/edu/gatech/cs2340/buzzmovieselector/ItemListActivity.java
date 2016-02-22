@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -53,6 +55,9 @@ public class ItemListActivity extends AppCompatActivity {
         View recyclerView = findViewById(R.id.movieList);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
+        ((RecyclerView) recyclerView).setLayoutManager(new LinearLayoutManager(this));
+
+
 
 //        if (findViewById(R.id.item_detail_container) != null) {
 //            // The detail container view will be present only in the
@@ -65,6 +70,9 @@ public class ItemListActivity extends AppCompatActivity {
         //Here we extract the objects out of the intent
         //Note that to pass them, they have to be serializable
         movies = (List<Movie>) getIntent().getSerializableExtra("movies");
+        for (Movie m : movies) {
+            Movies.addItem(m);
+        }
 
 
 //        List<Movie> mList = new ArrayList<Movie>();
@@ -78,7 +86,7 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(movies));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(Movies.ITEMS));
     }
 
     /**
