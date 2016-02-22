@@ -1,9 +1,12 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
+import java.io.Serializable;
+
 /**
  * Created by julianeuman on 2/21/16.
  */
-public class Movie {
+public class Movie implements Serializable {
+
     private String movieName;
     private String movieYear;
     private String movieLength;

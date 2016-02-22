@@ -22,9 +22,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements Serializable {
+
 
     private RequestQueue queue;
 
@@ -51,7 +54,7 @@ public class SearchActivity extends AppCompatActivity {
     public void onGetStateCodePress(View view) {
 
         //this is the URL for our REST service
-        String url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=Deadpool&page_limit=10&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
+        String url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=Dea&page_limit=10&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
 
         /*
             We expect to get back a JSON response.  Volley also has String responses.
@@ -83,61 +86,61 @@ public class SearchActivity extends AppCompatActivity {
 //                        //From that object, we extract the array of actual data labeled result
                         //JSONArray array = obj1.optJSONArray("movies");
                         //hardcoded for first element in array
-                        try {
-
-                            JSONObject jsonObject = obj1.getJSONObject(0);
-                            Movie m = new Movie();
-                            assert jsonObject != null;
-                            m.setMovieName(jsonObject.optString("title"));
-                            m.setMovieYear(jsonObject.optString("year"));
-                            m.setMovieMpaRating(jsonObject.optString("mpaa_rating"));
-                            m.setMovieLength(jsonObject.optString("runtime"));
-
-                            TextView viewTitle = (TextView) findViewById(R.id.movieTitle);
-                            TextView viewYear = (TextView) findViewById(R.id.movieYear);
-                            TextView viewLength = (TextView) findViewById(R.id.movieLength);
-                            TextView viewRating = (TextView) findViewById(R.id.mpaRating);
-                            viewTitle.setText(m.getMovieName());
-                            //System.out.println(m.getMovieYear());
-                            viewYear.setText(m.getMovieYear());
-                            viewLength.setText(m.getMovieLength());
-                            viewRating.setText(m.getMovieMpaRating());
-
-
-
-                        } catch (JSONException e) {
-                        Log.d("VolleyApp", "Failed to get JSON object");
-                        e.printStackTrace();
-                    }
+//                        try {
+//
+//                            JSONObject jsonObject = obj1.getJSONObject(0);
+//                            Movie m = new Movie();
+//                            assert jsonObject != null;
+//                            m.setMovieName(jsonObject.optString("title"));
+//                            m.setMovieYear(jsonObject.optString("year"));
+//                            m.setMovieMpaRating(jsonObject.optString("mpaa_rating"));
+//                            m.setMovieLength(jsonObject.optString("runtime"));
+//
+//                            TextView viewTitle = (TextView) findViewById(R.id.movieTitle);
+//                            TextView viewYear = (TextView) findViewById(R.id.movieYear);
+//                            TextView viewLength = (TextView) findViewById(R.id.movieLength);
+//                            TextView viewRating = (TextView) findViewById(R.id.mpaRating);
+//                            viewTitle.setText(m.getMovieName());
+//                            //System.out.println(m.getMovieYear());
+//                            viewYear.setText(m.getMovieYear());
+//                            viewLength.setText(m.getMovieLength());
+//                            viewRating.setText(m.getMovieMpaRating());
+//
+//
+//
+//                        } catch (JSONException e) {
+//                        Log.d("VolleyApp", "Failed to get JSON object");
+//                        e.printStackTrace();
+//                    }
 
 
 
 //
-//                        ArrayList<Movie> movies = new ArrayList<>();
-//                        for(int i=0; i < array.length(); i++) {
-////
-//                            try {
-//                                //for each array element, we have to create an object
-//                                JSONObject jsonObject = array.getJSONObject(i);
-//                                Movie m = new Movie();
-////                                State s = new State();
-//                                assert jsonObject != null;
-//                                m.setMovieName(jsonObject.optString("title"));
-//                                m.setMovieMpaRating(jsonObject.optString("mpaa_rating"));
-//                                m.setMovieYear(jsonObject.optInt("year"));
-//                                m.setMovieLength(jsonObject.optString("runtime"));
-//
+                        ArrayList<Movie> movies = new ArrayList<>();
+                        for(int i=0; i < obj1.length(); i++) {
+
+                            try {
+                                //for each array element, we have to create an object
+                                JSONObject jsonObject = obj1.getJSONObject(i);
+                                Movie m = new Movie();
+
+                                assert jsonObject != null;
+                                m.setMovieName(jsonObject.optString("title"));
+                                m.setMovieMpaRating(jsonObject.optString("mpaa_rating"));
+                                m.setMovieYear(jsonObject.optString("year"));
+                                m.setMovieLength(jsonObject.optString("runtime"));
+
 ////                                //save the object for later
-//                                movies.add(m);
+                                movies.add(m);
 ////
 ////
-//                            } catch (JSONException e) {
-//                                Log.d("VolleyApp", "Failed to get JSON object");
-//                                e.printStackTrace();
-//                            }
-//                        }
+                            } catch (JSONException e) {
+                                Log.d("VolleyApp", "Failed to get JSON object");
+                                e.printStackTrace();
+                            }
+                        }
                         //once we have all data, then go to list screen
- //                       changeView(movies);
+                        changeView(movies);
                     }
                 }, new Response.ErrorListener() {
 
@@ -153,17 +156,17 @@ public class SearchActivity extends AppCompatActivity {
         queue.add(jsObjRequest);
     }
 
-//    /**
-//     * This method changes to our new list view of the states, but we have to pass the
-//     * state array into the intent so the new screen gets the data.
-//     *
-//     * @param states the list of state objects we created from the JSon response
-//     */
-///    private void changeView(ArrayList<Movie> movies) {
-///        Intent intent = new Intent(this, ItemListActivity.class);
-///        //this is where we save the info.  note the State object must be Serializable
-///        intent.putExtra("states", states);
-///        startActivity(intent);
-///    }
+    /**
+     * This method changes to our new list view of the states, but we have to pass the
+     * state array into the intent so the new screen gets the data.
+     *
+     * @param movies the list of state objects we created from the JSon response
+     */
+    private void changeView(ArrayList<Movie> movies) {
+        Intent intent = new Intent(SearchActivity.this, ItemListActivity.class);
+        //this is where we save the info.  note the State object must be Serializable
+        intent.putExtra("movies", movies);
+        startActivity(intent);
+    }
 
 }
