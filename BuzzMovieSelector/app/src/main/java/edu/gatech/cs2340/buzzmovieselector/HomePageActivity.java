@@ -34,6 +34,8 @@ public class HomePageActivity extends AppCompatActivity {
     private SearchView searchView;
     private EditText tempSearch;
     private Button tempButton;
+    private Button newReleases;
+    private Button newDvd;
 
     private RequestQueue queue;
 
@@ -43,6 +45,7 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         tempButton = (Button) findViewById(R.id.temp_button);
+
         tempSearch = (EditText) findViewById(R.id.temp_search);
 
         tempButton.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +54,25 @@ public class HomePageActivity extends AppCompatActivity {
                 String tempQuery = tempSearch.getText().toString();
                 Intent intent = new Intent(HomePageActivity.this, SearchActivity.class);
                 intent.putExtra("query", tempQuery);
+                startActivity(intent);
+            }
+        });
+
+        newReleases = (Button) findViewById(R.id.newReleases);
+        newDvd = (Button) findViewById(R.id.newDVD);
+
+        newReleases.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePageActivity.this, NewReleases.class);
+                startActivity(intent);
+            }
+        });
+
+        newDvd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePageActivity.this, NewDVDs.class);
                 startActivity(intent);
             }
         });
