@@ -6,7 +6,7 @@
         android:id="@+id/menu_movie_search"
         android:orderInCategory="99"
         android:title="Search"
-        android:icon="@drawable/menu-search"
+        android:icon="@drawable/menu_search"
         app:showAsAction="always"
         app:actionViewClass="android.support.v7.widget.SearchView" />
     <item
