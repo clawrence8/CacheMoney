@@ -29,5 +29,4 @@ public class Movies {
         ITEM_MAP.put(item.getMovieName(), item);
     }
 
-
 }
