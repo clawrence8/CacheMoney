@@ -43,6 +43,11 @@ public class SearchActivity extends AppCompatActivity {
         //need to create a singleton to hold it if you are making REST requests throughout the app.
         queue = Volley.newRequestQueue(this);
     }
+
+    /**
+     *
+     * @param view app view
+     */
     public void onGetStateCodePress(View view) {
 
         //this is the URL for our REST service

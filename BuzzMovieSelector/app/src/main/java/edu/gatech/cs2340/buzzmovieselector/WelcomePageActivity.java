@@ -57,6 +57,11 @@ public class WelcomePageActivity extends AppCompatActivity {
 //        return super.onOptionsItemSelected(item);
 //    }
 
+    /**
+     * Opens the login page upon click of the login button
+     * @param w login button
+     */
+
     public void onLoginButtonClicked(View w) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

@@ -33,9 +33,19 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
         getDelegate().onPostCreate(savedInstanceState);
     }
 
+    /**
+     *
+     * @return ActionBar returns a toolbar
+     */
+
     public ActionBar getSupportActionBar() {
         return getDelegate().getSupportActionBar();
     }
+
+    /**
+     *
+     * @param toolbar application toolbar at the top of each page
+     */
 
     public void setSupportActionBar(@Nullable Toolbar toolbar) {
         getDelegate().setSupportActionBar(toolbar);
@@ -96,9 +106,18 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
         getDelegate().onDestroy();
     }
 
+    /**
+     *
+     */
+
     public void invalidateOptionsMenu() {
         getDelegate().invalidateOptionsMenu();
     }
+
+    /**
+     *
+     * @return AppCompatDelegate
+     */
 
     private AppCompatDelegate getDelegate() {
         if (mDelegate == null) {
