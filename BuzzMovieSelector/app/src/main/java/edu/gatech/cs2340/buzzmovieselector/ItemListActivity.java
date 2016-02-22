@@ -168,4 +168,10 @@ public class ItemListActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        movies.clear();
+    }
 }

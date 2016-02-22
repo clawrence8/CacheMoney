@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchActivity extends AppCompatActivity implements Serializable {
 
@@ -36,6 +37,8 @@ public class SearchActivity extends AppCompatActivity implements Serializable {
      * in handy for debugging.
      */
     private String response;
+    private String query;
+    private ArrayList<Movie> movies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +48,22 @@ public class SearchActivity extends AppCompatActivity implements Serializable {
         //create the queue.  You should only have one of these in your entire application, so you might
         //need to create a singleton to hold it if you are making REST requests throughout the app.
         queue = Volley.newRequestQueue(this);
-    }
 
-    /**
-     *
-     * @param view app view
-     */
-    public void onGetStateCodePress(View view) {
+//        setContentView(R.layout.activity_search);
+
+        query = getIntent().getStringExtra("query");
+        Log.i("queryExtra", query);
+
+    //}
+
+
+
+
+    //public void onGetStateCodePress(View view) {
 
         //this is the URL for our REST service
-        String url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=Dea&page_limit=10&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
+        String url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=" + query.trim()
+                + "&page_limit=10&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
 
         /*
             We expect to get back a JSON response.  Volley also has String responses.
@@ -69,6 +78,7 @@ public class SearchActivity extends AppCompatActivity implements Serializable {
                     public void onResponse(JSONObject resp) {
                         //handle a valid response coming back.  Getting this string mainly for debug
                         response = resp.toString();
+                        Log.i("repsonse", response);
                         //printing first 500 chars of the response.  Only want to do this for debug
 //                        TextView view = (TextView) findViewById(R.id.movieTitle);
 //                        view.setText(response.substring(0, 500));
@@ -116,7 +126,7 @@ public class SearchActivity extends AppCompatActivity implements Serializable {
 
 
 //
-                        ArrayList<Movie> movies = new ArrayList<>();
+                        movies = new ArrayList<>();
                         for(int i=0; i < obj1.length(); i++) {
 
                             try {
@@ -167,6 +177,13 @@ public class SearchActivity extends AppCompatActivity implements Serializable {
         //this is where we save the info.  note the State object must be Serializable
         intent.putExtra("movies", movies);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        movies.clear();
+        query = null;
     }
 
 }
