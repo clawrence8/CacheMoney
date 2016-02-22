@@ -19,6 +19,11 @@ public class Movies {
      */
     public static final Map<String, Movie> ITEM_MAP = new HashMap<>();
 
+    /**
+     *
+     * @param item new movie to add
+     */
+
     public static void addItem(Movie item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.getMovieName(), item);
