@@ -20,4 +20,23 @@
         android:id="@+id/temp_button"
         android:layout_below="@+id/temp_search"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Releases"
+        android:id="@+id/newReleases"
+        android:layout_below="@+id/temp_button"
+        android:layout_toLeftOf="@+id/temp_button"
+        android:layout_toStartOf="@+id/temp_button"
+        android:layout_marginTop="93dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New DVDs"
+        android:id="@+id/newDVD"
+        android:layout_alignTop="@+id/newReleases"
+        android:layout_toRightOf="@+id/temp_button"
+        android:layout_toEndOf="@+id/temp_button" />
 </RelativeLayout>
