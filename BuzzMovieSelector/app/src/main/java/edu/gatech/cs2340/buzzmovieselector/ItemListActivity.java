@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Created by julianeuman on 2/21/16.
@@ -65,9 +65,16 @@ public class ItemListActivity extends AppCompatActivity {
         //Here we extract the objects out of the intent
         //Note that to pass them, they have to be serializable
         movies = (List<Movie>) getIntent().getSerializableExtra("movies");
-//        for (Movie m : movies) {
-//            Movie.addItem(m);
+
+
+//        List<Movie> mList = new ArrayList<Movie>();
+//        for (Movie m: movies) {
+//            mList.add(m);
 //        }
+//        movies = mList;
+////        for (Movie m : movies) {
+////            Movie.addItem(m);
+////        }
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -83,6 +90,11 @@ public class ItemListActivity extends AppCompatActivity {
         private final List<Movie> mValues;
 
         public SimpleItemRecyclerViewAdapter(List<Movie> items) {
+            if (items == null) {
+                System.out.println("NULL HERE");
+            } else {
+                System.out.println("NOT NULL HERE");
+            }
             mValues = items;
         }
 
@@ -119,6 +131,7 @@ public class ItemListActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
+
             return mValues.size();
         }
 

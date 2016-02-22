@@ -22,9 +22,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements Serializable {
+
 
     private RequestQueue queue;
 
@@ -155,7 +158,7 @@ public class SearchActivity extends AppCompatActivity {
      * @param movies the list of state objects we created from the JSon response
      */
     private void changeView(ArrayList<Movie> movies) {
-        Intent intent = new Intent(this, ItemListActivity.class);
+        Intent intent = new Intent(SearchActivity.this, ItemListActivity.class);
         //this is where we save the info.  note the State object must be Serializable
         intent.putExtra("movies", movies);
         startActivity(intent);
