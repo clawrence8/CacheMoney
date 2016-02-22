@@ -38,6 +38,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Upon clicking the lgoin button, this method facilitates the validation of user input
+     * for username and password
+     * @param v login button view
+     */
 
     public void onLoginButtonPressed(View v) {
         AuthenticationMeasure userman = UserManager.getInstance();
@@ -60,6 +65,11 @@ public class LoginActivity extends AppCompatActivity {
             t.show();
         }
     }
+
+    /**
+     * Upon cancellation of registering for an account, this takes you to the wlecome page.
+     * @param v cancel button view
+     */
 
     public void onCancelButtonPressed(View v) {
         Intent intent = new Intent(this, WelcomePageActivity.class);
