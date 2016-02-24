@@ -9,6 +9,7 @@ import java.util.Map;
  * Created by julianeuman on 2/21/16.
  */
 public class Movies {
+
     /**
      * An array of State objects.
      */
@@ -19,6 +20,11 @@ public class Movies {
      */
     public static final Map<String, Movie> ITEM_MAP = new HashMap<>();
 
+    public Movies() {
+        ITEMS.clear();
+        ITEM_MAP.clear();
+    }
+
     /**
      *
      * @param item new movie to add
@@ -27,6 +33,12 @@ public class Movies {
     public static void addItem(Movie item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.getMovieName(), item);
+    }
+
+    public static void removeAll() {
+        ITEMS.clear();
+        ITEM_MAP.clear();
+
     }
 
 }

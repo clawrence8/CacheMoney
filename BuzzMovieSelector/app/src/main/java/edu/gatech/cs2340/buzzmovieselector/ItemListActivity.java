@@ -69,6 +69,7 @@ public class ItemListActivity extends AppCompatActivity {
 
         //Here we extract the objects out of the intent
         //Note that to pass them, they have to be serializable
+        Movies.removeAll();
         movies = (List<Movie>) getIntent().getSerializableExtra("movies");
         for (Movie m : movies) {
             Movies.addItem(m);
