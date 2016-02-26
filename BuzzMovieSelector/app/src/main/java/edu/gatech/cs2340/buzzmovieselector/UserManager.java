@@ -1,5 +1,7 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
+import com.firebase.client.Firebase;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ public class UserManager implements AuthenticationMeasure {
     private static Map<String, User> usersList = new HashMap<>();
     private User currentUser;
     private int userCount;
+    private Firebase database = new Firebase("https://buzz-movie-selector5.firebaseio.com/");
 
     /**
      *Single usermanager for the entire application
@@ -49,6 +52,7 @@ public class UserManager implements AuthenticationMeasure {
         usersList.put(newUser.getName(), newUser);
         userCount++;
         setCurrentUser(newUser);
+        database.child("Users").child(newUser.getUsername()).setValue(newUser);
     }
 
     /**

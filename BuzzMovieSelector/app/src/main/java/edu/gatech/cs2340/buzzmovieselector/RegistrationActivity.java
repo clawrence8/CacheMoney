@@ -10,7 +10,7 @@ import android.widget.EditText;
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText mNameEditText;//the m is just a convention to denote instance data for the class
-    private EditText mGtidEditText;
+    private EditText mUsernameEditText;
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
     private EditText mMajorEditText;
@@ -25,7 +25,7 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         mNameEditText = (EditText) findViewById(R.id.name_edit_text);
-        mGtidEditText = (EditText) findViewById(R.id.gtid_edit_text);
+        mUsernameEditText = (EditText) findViewById(R.id.username_edit_text);
         mEmailEditText = (EditText) findViewById(R.id.email_edit_text);
         mPasswordEditText = (EditText) findViewById(R.id.password_edit_text);
         mMajorEditText = (EditText) findViewById(R.id.major_edit_text);
@@ -39,14 +39,14 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name = mNameEditText.getText().toString();
-                String gtid = mGtidEditText.getText().toString();
+                String username = mUsernameEditText.getText().toString();
                 String email = mEmailEditText.getText().toString();
                 String password = mPasswordEditText.getText().toString();
                 String major = mMajorEditText.getText().toString();
                 String gender = mGenderEditText.getText().toString();
                 String interests = mInterestEditText.getText().toString();
 
-                User newUser = new User(name, gtid, email, password, major, gender, interests);
+                User newUser = new User(name, username, email, password, major, gender, interests);
                 UserManager.getInstance().addUser(newUser);
 
                 Intent homePageIntent = new Intent(RegistrationActivity.this, HomePageActivity.class);
