@@ -23,7 +23,7 @@ public class Movies {
     public Movies() {
         ITEMS.clear();
         ITEM_MAP.clear();
-    }
+    } 
 
     /**
      *

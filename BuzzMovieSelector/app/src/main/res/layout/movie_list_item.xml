@@ -69,6 +69,18 @@
         android:layout_toEndOf="@+id/imageView"
         android:textColor="#242524"
         android:paddingLeft="10dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Movie"
+        android:id="@+id/viewMovie"
+        android:layout_below="@+id/movieTitle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="false"
+        android:onClick="MovieActivity" />
     <!--<Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

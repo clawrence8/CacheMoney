@@ -23,7 +23,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".LoginActivity"
@@ -44,9 +43,7 @@
             android:label="@string/title_activity_edit_profile"
             android:parentActivityName=".ProfilePageActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".SearchActivity">
-
-        </activity>
+        <activity android:name=".SearchActivity"></activity>
         <activity
             android:name=".ItemListActivity"
             android:label="Item List"
@@ -58,6 +55,10 @@
         <activity
             android:name=".NewDVDs"
             android:label="@string/title_activity_new_dvds"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MovieActivity"
+            android:label="@string/title_activity_movie"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
