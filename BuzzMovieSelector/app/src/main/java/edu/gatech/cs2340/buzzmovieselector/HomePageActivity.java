@@ -44,6 +44,7 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+
         tempButton = (Button) findViewById(R.id.temp_button);
 
         tempSearch = (EditText) findViewById(R.id.temp_search);
@@ -52,9 +53,11 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String tempQuery = tempSearch.getText().toString();
+                String buttonPressed = "search";
                 Log.i("temp", tempQuery);
-                Intent intent = new Intent(HomePageActivity.this, SearchActivity.class);
+                Intent intent = new Intent(HomePageActivity.this, ItemListActivity.class);
                 intent.putExtra("query", tempQuery);
+                intent.putExtra("button", buttonPressed);
                 if (tempQuery != null && tempQuery != "") {
                     startActivity(intent);
                 }
@@ -67,7 +70,9 @@ public class HomePageActivity extends AppCompatActivity {
         newReleases.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomePageActivity.this, NewReleases.class);
+                String buttonPressed = "newReleases";
+                Intent intent = new Intent(HomePageActivity.this, ItemListActivity.class);
+                intent.putExtra("button", buttonPressed);
                 startActivity(intent);
             }
         });
@@ -75,7 +80,9 @@ public class HomePageActivity extends AppCompatActivity {
         newDvd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomePageActivity.this, NewDVDs.class);
+                String buttonPressed = "newDVD";
+                Intent intent = new Intent(HomePageActivity.this, ItemListActivity.class);
+                intent.putExtra("button", buttonPressed);
                 startActivity(intent);
             }
         });
@@ -96,16 +103,7 @@ public class HomePageActivity extends AppCompatActivity {
                 searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
 
-//        searchView.setOnSearchClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String query = searchView.getQuery().toString();
-//                Log.i("query", query);
-//                Intent intent = new Intent(HomePageActivity.this, SearchActivity.class);
-//                intent.putExtra("query", query);
-//                //startActivity(intent);
-//            }
-//        });
+
 
 
         return true;
