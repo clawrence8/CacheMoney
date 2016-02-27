@@ -52,9 +52,12 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String tempQuery = tempSearch.getText().toString();
+                Log.i("temp", tempQuery);
                 Intent intent = new Intent(HomePageActivity.this, SearchActivity.class);
                 intent.putExtra("query", tempQuery);
-                startActivity(intent);
+                if (tempQuery != null && tempQuery != "") {
+                    startActivity(intent);
+                }
             }
         });
 

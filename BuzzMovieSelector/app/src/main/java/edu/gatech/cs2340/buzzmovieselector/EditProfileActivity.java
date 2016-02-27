@@ -27,7 +27,7 @@ public class EditProfileActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     private EditText mNameEditText;//the m is just a convention to denote instance data for the class
-    private EditText mGtidEditText;
+    private EditText mUsernameEditText;
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
     private EditText mMajorEditText;
@@ -45,7 +45,7 @@ public class EditProfileActivity extends AppCompatActivity {
         User currentUser = UserManager.getInstance().retrieveCurrentUser();
 
         mNameEditText = (EditText) findViewById(R.id.name_edit_text);
-        mGtidEditText = (EditText) findViewById(R.id.gtid_edit_text);
+        mUsernameEditText = (EditText) findViewById(R.id.username_edit_text);
         mEmailEditText = (EditText) findViewById(R.id.email_edit_text);
         mPasswordEditText = (EditText) findViewById(R.id.password_edit_text);
         mMajorEditText = (EditText) findViewById(R.id.major_edit_text);
@@ -53,7 +53,7 @@ public class EditProfileActivity extends AppCompatActivity {
         mInterestEditText = (EditText) findViewById(R.id.interest_edit_text);
 
         mNameEditText.setText(currentUser.getName());
-        mGtidEditText.setText(currentUser.getGtid());
+        mUsernameEditText.setText(currentUser.getUsername());
         mEmailEditText.setText(currentUser.getEmail());
         mPasswordEditText.setText(currentUser.getPassword());
         mMajorEditText.setText(currentUser.getMajor());
@@ -69,7 +69,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name = mNameEditText.getText().toString();
-                String gtid = mGtidEditText.getText().toString();
+                String username = mUsernameEditText.getText().toString();
                 String email = mEmailEditText.getText().toString();
                 String password = mPasswordEditText.getText().toString();
                 String major = mMajorEditText.getText().toString();
@@ -78,7 +78,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 User currentUser = UserManager.getInstance().retrieveCurrentUser();
 
                 currentUser.setName(name);
-                currentUser.setGtid(gtid);
+                currentUser.setUsername(username);
                 currentUser.setEmail(email);
                 currentUser.setPassword(password);
                 currentUser.setMajor(major);

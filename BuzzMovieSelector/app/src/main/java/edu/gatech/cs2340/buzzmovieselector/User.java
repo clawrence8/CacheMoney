@@ -1,23 +1,25 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
+import com.firebase.client.Firebase;
+
 /**
  * Created by naudghebre on 2/5/16.
  */
 public class User {
     private String mName;
-    private String mGtid;
+    private String mUsername;
     private String mEmail;
     private String mPassword;
     private String mMajor;
     private String mGender;
     private String mInterests;
     private int loginAttempts;
-    private String gtid;
+    private String username;
 
     /**
      *
      * @param name user name
-     * @param gtid user gtid
+     * @param username user username
      * @param email user email
      * @param password user password
      * @param major user major
@@ -25,10 +27,10 @@ public class User {
      * @param interests users' movie interest
      */
 
-    public User(String name, String gtid, String email, String password, String major,
+    public User(String name, String username, String email, String password, String major,
                 String gender, String interests) {
         mName = name;
-        mGtid = gtid;
+        mUsername = username;
         mEmail = email;
         mPassword = password;
         mMajor = major;
@@ -74,20 +76,20 @@ public class User {
 
     /**
      *
-     * @return returns user's gatech id#
+     * @return returns user's username
      */
 
-    public String getGtid() {
-        return mGtid;
+    public String getUsername() {
+        return mUsername;
     }
 
     /**
      *
-     * @param mGtid user's gatech id#
+     * @param mUsername user's username
      */
 
-    public void setGtid(String mGtid) {
-        this.mGtid = mGtid;
+    public void setUsername(String mUsername) {
+        this.mUsername = mUsername;
     }
 
     /**
