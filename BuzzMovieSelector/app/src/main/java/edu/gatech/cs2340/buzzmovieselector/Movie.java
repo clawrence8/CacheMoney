@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -25,13 +26,15 @@ public class Movie implements Serializable {
     private String movieGenre;
     private String movieDescription;
     private String movieRating;
+    private double avgRating;
     private ArrayList<Map> movieReviews = new ArrayList<>();
+    private String numstars;
 
     /**
      * Creates a new movie object with null inputs
      */
     public Movie() {
-        this(null, null, null, null, null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null, null, null, null, 0);
 
     }
 
@@ -43,7 +46,7 @@ public class Movie implements Serializable {
      * @param mpaRating film rating
      */
     public Movie(String id, String imdbId, String name, String year, String movieLength, String mpaRating,
-                 String movieDescription, String movieGenre, String movieRating, String moviePoster) {
+                 String movieDescription, String movieGenre, String movieRating, String moviePoster, double avgRating) {
         this.movieName = name;
         this.movieImdbId = imdbId;
         this.movieYear = year;
@@ -54,6 +57,7 @@ public class Movie implements Serializable {
         this.movieGenre = movieGenre;
         this.movieRating = movieRating;
         this.moviePoster = moviePoster;
+        this.avgRating = avgRating;
     }
 
     /**
@@ -252,5 +256,29 @@ public class Movie implements Serializable {
      */
     public void addReview(Map newReview) {
         this.movieReviews.add(newReview);
+    }
+
+    /**
+     *
+     * @return this movie's review number of stars
+     */
+    public String getNumstars() {
+        return (String) this.getMovieReviews().get(0).get("numStars");
+    }
+
+    /**
+     *
+     * @return int avg rating
+     */
+    public double getAvgRating() {
+        return avgRating;
+    }
+
+    /**
+     *
+     * @param avgRating the avg rating of this movie
+     */
+    public void setAvgRating(double avgRating) {
+        this.avgRating = avgRating;
     }
 }

@@ -22,7 +22,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.InputStream;
@@ -53,13 +58,13 @@ public class MovieActivity extends AppCompatActivity {
     private TextView mMajorTextView;
     private TextView mCommentTextView;
     private TextView mRatingTextView;
+    private TextView mUserRatingTextView;
     private EditText mComment;
     private String url;
     private String genrelist = "";
     private Movie m;
-    private RecyclerView mRatingsRecyclerView;
+    private String mRating;
     private Firebase database = new Firebase("https://buzz-movie-selector5.firebaseio.com/");
-
 
     /**
      * Creates new intent to launch Movie Activity to display a selected movie's details
@@ -85,7 +90,6 @@ public class MovieActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String movieId = intent.getStringExtra("id");
         setContentView(R.layout.activity_movie);
-        Firebase.setAndroidContext(this);
         url = "http://api.rottentomatoes.com/api/public/v1.0/movies/" + movieId + ".json?apikey=yedukp76ffytfuy24zsqk7f5";
 
         queue = Volley.newRequestQueue(this);
@@ -96,7 +100,7 @@ public class MovieActivity extends AppCompatActivity {
         mYear = (TextView) findViewById(R.id.movieYearTextView);
         mGenre = (TextView) findViewById(R.id.movieGenreTextView);
         mDescription = (TextView) findViewById(R.id.movieDescriptionTextView);
-//        mUserRating = (TextView) findViewById(R.id.userRatingTextView);
+        mUserRatingTextView = (TextView) findViewById(R.id.userRatingTextView);
         mPoster = (ImageView) findViewById(R.id.moviePosterImageView);
         mUsernameTextView = (TextView) findViewById(R.id.rating_username);
         mMajorTextView = (TextView) findViewById(R.id.rating_major);
@@ -139,6 +143,7 @@ public class MovieActivity extends AppCompatActivity {
                         m.setMovieLength(resp.optString("runtime"));
                         m.setMovieMpaRating(resp.optString("mpaa_rating"));
                         m.setMovieYear(resp.optString("year"));
+                        m.setAvgRating(0);
 
 //                        Firebase revs = database.child("movies").child(movieId).child("movieReviews");
 //                        Query q = revs.orderByKey();
@@ -171,6 +176,7 @@ public class MovieActivity extends AppCompatActivity {
                         mGenre.setText("Genres: " + m.getMovieGenre());
                         mLength.setText("Runtime: " + m.getMovieLength() + " minutes");
                         mYear.setText(m.getMovieYear());
+                        mUserRatingTextView.setText("User Rating: No reviews yet");
 
 //                        database.child("movies").child(m.getMovieId()).setValue(m);
                     }
@@ -187,8 +193,6 @@ public class MovieActivity extends AppCompatActivity {
         //this actually queues up the async response with Volley
         queue.add(jsObjRequest);
 
-        //Query query database.;
-
         mRatingBar = (RatingBar) findViewById(R.id.rating_bar);
         mComment = (EditText) findViewById(R.id.commentEditText);
 
@@ -199,11 +203,12 @@ public class MovieActivity extends AppCompatActivity {
         mSubmitReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                double rating;
                 float givenStars = mRatingBar.getRating();
                 String comm = mComment.getText().toString();
                 User curr = UserManager.getInstance().retrieveCurrentUser();
 //                String currUsername = curr.getUsername();
-                String currUsername = "halequin";
+                String currUsername = "bobwaters";
 //                String currMajor = curr.getMajor();
                 String currMajor = "CS";
                 String s = Float.toString(givenStars);
@@ -213,6 +218,15 @@ public class MovieActivity extends AppCompatActivity {
                 newReview.put("major", currMajor);
                 newReview.put("numStars", s);
                 newReview.put("comment", comm);
+
+                if(m.getAvgRating() != givenStars && m.getAvgRating() != 0) {
+                    rating = (m.getAvgRating() + givenStars) / 2;
+                } else {
+                    rating = givenStars;
+                }
+
+                m.setAvgRating((double) rating);
+                mUserRatingTextView.setText("User Rating: " + String.valueOf(m.getAvgRating()) + " stars");
 
                 m.addReview(newReview);
 
@@ -266,6 +280,37 @@ public class MovieActivity extends AppCompatActivity {
 //                });
             }
         });
+
+//        Query q = database.orderByChild("movies/"+movieId+"/movieReviews/0/numStars");
+//        q.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Review movie = dataSnapshot.getValue(Review.class);
+//                mRating = movie.getRating();
+//                mUserRatingTextView.setText(mRating);
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(FirebaseError firebaseError) {
+//
+//            }
+//        });
+
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
