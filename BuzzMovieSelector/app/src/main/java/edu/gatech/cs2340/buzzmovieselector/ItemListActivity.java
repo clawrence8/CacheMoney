@@ -2,6 +2,9 @@ package edu.gatech.cs2340.buzzmovieselector;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,10 +112,14 @@ public class ItemListActivity extends AppCompatActivity {
                                 Movie m = new Movie();
 
                                 assert jsonObject != null;
+                                m.setMovieId(jsonObject.optString("id"));
                                 m.setMovieName(jsonObject.optString("title"));
                                 m.setMovieMpaRating(jsonObject.optString("mpaa_rating"));
                                 m.setMovieYear(jsonObject.optString("year"));
                                 m.setMovieLength(jsonObject.optString("runtime"));
+                                JSONObject posters = jsonObject.optJSONObject("posters");
+                                String mImageUrl = posters.optString("thumbnail");
+                                m.setMoviePoster(mImageUrl);
 
 ////                                //save the object for later
                                 movies.add(m);
@@ -207,9 +216,11 @@ public class ItemListActivity extends AppCompatActivity {
             holder.mItem = mValues.get(position);
 
             holder.mNameView.setText(mValues.get(position).getMovieName());
-            holder.mLengthView.setText(mValues.get(position).getMovieLength());
-            holder.mMPAView.setText(mValues.get(position).getMovieMpaRating());
+            holder.mLengthView.setText("Runtime: " + mValues.get(position).getMovieLength() + " minutes");
+            holder.mMPAView.setText("Rated "+ mValues.get(position).getMovieMpaRating());
             holder.mYearView.setText(mValues.get(position).getMovieYear());
+            new DownloadImageTask(holder.mPosterView).execute(mValues.get(position).getMoviePoster());
+
 
 
             //for when you are clicking on the individual movie
@@ -232,18 +243,21 @@ public class ItemListActivity extends AppCompatActivity {
             return mValues.size();
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             public final View mView;
             public final TextView mNameView;
             public final TextView mLengthView;
             public final TextView mMPAView;
             public final TextView mYearView;
+            public final ImageView mPosterView;
 
             public Movie mItem;
 
             public ViewHolder(View view) {
                 super(view);
+                view.setOnClickListener(this);
                 mView = view;
+                mPosterView = (ImageView) view.findViewById(R.id.imageView);
                 mNameView = (TextView) view.findViewById(R.id.movieTitle);
                 mLengthView = (TextView) view.findViewById(R.id.movieLength);
                 mMPAView = (TextView) view.findViewById(R.id.mpaRating);
@@ -255,6 +269,14 @@ public class ItemListActivity extends AppCompatActivity {
                 return "Movies";
                // return super.toString() + " '" + mContentView.getText() + "'";
             }
+
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(ItemListActivity.this, MovieActivity.class);
+                intent.putExtra("id", mItem.getMovieId());
+                ItemListActivity.this.startActivity(intent);
+            }
         }
     }
 
@@ -262,5 +284,31 @@ public class ItemListActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         movies.clear();
+    }
+
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

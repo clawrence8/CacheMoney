@@ -46,11 +46,13 @@
         <activity
             android:name=".ItemListActivity"
             android:label="Item List"
+            android:parentActivityName=".HomePageActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".MovieActivity"
             android:label="@string/title_activity_movie"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:parentActivityName=".ItemListActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

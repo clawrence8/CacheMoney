@@ -1,5 +1,10 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+
 import java.io.Serializable;
 
 /**
@@ -7,16 +12,22 @@ import java.io.Serializable;
  */
 public class Movie implements Serializable {
 
+    private String movieId;
+    private String movieImdbId;
     private String movieName;
     private String movieYear;
+    private String moviePoster;
     private String movieLength;
     private String movieMpaRating;
+    private String movieGenre;
+    private String movieDescription;
+    private String movieRating;
 
     /**
      * Creates a new movie object with null inputs
      */
     public Movie() {
-        this(null, null, null, null);
+        this(null, null, null, null, null, null, null, null, null, null);
 
     }
 
@@ -27,13 +38,37 @@ public class Movie implements Serializable {
      * @param movieLength movie duration
      * @param mpaRating film rating
      */
-    public Movie(String name, String year, String movieLength, String mpaRating) {
+    public Movie(String id, String imdbId, String name, String year, String movieLength, String mpaRating,
+                 String movieDescription, String movieGenre, String movieRating, String moviePoster) {
         this.movieName = name;
+        this.movieImdbId = imdbId;
         this.movieYear = year;
+        this.movieId = id;
         this.movieLength = movieLength;
         this.movieMpaRating = mpaRating;
+        this.movieDescription = movieDescription;
+        this.movieGenre = movieGenre;
+        this.movieRating = movieRating;
+        this.moviePoster = moviePoster;
     }
 
+    /**
+     *
+     * @return movie id
+     */
+
+    public String getMovieId() {
+        return this.movieId;
+    }
+
+    /**
+     *
+     * @return movie imbdid
+     */
+
+    public String getMovieImbdId() {
+        return this.movieImdbId;
+    }
 
     /**
      *
@@ -55,6 +90,16 @@ public class Movie implements Serializable {
 
     /**
      *
+     * @return poster url
+     */
+
+    public String getMoviePoster() {
+        return this.moviePoster;
+    }
+
+
+    /**
+     *
      * @return movie duration
      */
 
@@ -69,6 +114,51 @@ public class Movie implements Serializable {
 
     public String getMovieMpaRating() {
         return this.movieMpaRating;
+    }
+
+    /**
+     *
+     * @return movie description
+     */
+
+    public String getMovieDescription() {
+        return this.movieDescription;
+    }
+
+    /**
+     *
+     * @return movie genre
+     */
+
+    public String getMovieGenre() {
+        return this.movieGenre;
+    }
+
+    /**
+     *
+     * @return movie rating
+     */
+
+    public String getMovieRating() {
+        return this.movieRating;
+    }
+
+    /**
+     *
+     * @param id id of movie
+     */
+
+    public void setMovieId(String id) {
+        this.movieId = id;
+    }
+
+    /**
+     *
+     * @param imdbId id of movie
+     */
+
+    public void setMovieImdbId(String imdbId) {
+        this.movieImdbId = imdbId;
     }
 
     /**
@@ -105,6 +195,42 @@ public class Movie implements Serializable {
 
     public void setMovieMpaRating(String rating) {
         this.movieMpaRating = rating;
+    }
+
+    /**
+     *
+     * @param description movie description
+     */
+
+    public void setMovieDescription(String description) {
+        this.movieDescription = description;
+    }
+
+    /**
+     *
+     * @param genre movie genre
+     */
+
+    public void setMovieGenre(String genre) {
+        this.movieGenre = genre;
+    }
+
+    /**
+     *
+     * @param rating movie user rating
+     */
+
+    public void setMovieRating(String rating) {
+        this.movieRating = rating;
+    }
+
+    /**
+     *
+     * @param posterUrl movie poster url
+     */
+
+    public void setMoviePoster(String posterUrl) {
+        this.moviePoster = posterUrl;
     }
 
 }

@@ -20,6 +20,11 @@ public class Movies {
      */
     public static final Map<String, Movie> ITEM_MAP = new HashMap<>();
 
+    /**
+     *
+     */
+    private static Map<String, User> moviesList = new HashMap<>();
+
     public Movies() {
         ITEMS.clear();
         ITEM_MAP.clear();
