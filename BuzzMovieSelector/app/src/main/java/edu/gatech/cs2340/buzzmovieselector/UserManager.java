@@ -64,6 +64,8 @@ public class UserManager implements AuthenticationMeasure {
     }
 
     /**
+     *
+     *
      * returns reference to the database
      * @return reference to the database
      */

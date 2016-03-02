@@ -6,6 +6,9 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by julianeuman on 2/21/16.
@@ -22,6 +25,7 @@ public class Movie implements Serializable {
     private String movieGenre;
     private String movieDescription;
     private String movieRating;
+    private ArrayList<Map> movieReviews = new ArrayList<>();
 
     /**
      * Creates a new movie object with null inputs
@@ -145,6 +149,15 @@ public class Movie implements Serializable {
 
     /**
      *
+     * @return list of this movie's reviews
+     */
+
+    public ArrayList<Map> getMovieReviews() {
+        return this.movieReviews;
+    }
+
+    /**
+     *
      * @param id id of movie
      */
 
@@ -233,4 +246,11 @@ public class Movie implements Serializable {
         this.moviePoster = posterUrl;
     }
 
+    /**
+     *
+     * @param newReview new movie review
+     */
+    public void addReview(Map newReview) {
+        this.movieReviews.add(newReview);
+    }
 }
