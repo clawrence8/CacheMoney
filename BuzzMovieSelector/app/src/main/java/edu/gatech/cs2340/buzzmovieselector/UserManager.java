@@ -1,6 +1,14 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.snapshot.IndexedNode;
+import com.firebase.client.snapshot.Node;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +64,14 @@ public class UserManager implements AuthenticationMeasure {
     }
 
     /**
+     * returns reference to the database
+     * @return reference to the database
+     */
+    public Firebase getDatabase() {
+        return database;
+    }
+
+    /**
      *Removes user from userlist
      * @param user user to be removed
      */
@@ -71,7 +87,7 @@ public class UserManager implements AuthenticationMeasure {
      * @param user current user
      */
 
-    private void setCurrentUser(User user) {
+    public void setCurrentUser(User user) {
         this.currentUser = user;
     }
 
@@ -116,4 +132,5 @@ public class UserManager implements AuthenticationMeasure {
         if (u == null) return false;
         return u.checkPassword(pass);
     }
+
 }

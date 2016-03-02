@@ -4,6 +4,10 @@
     <string name="title_activity_login">Sign in</string>
     <string name="menu_my_profile">My Profile</string>
     <string name="logout">Logout</string>
+    <string name="registration_error">Please create a username</string>
+    <string name="password_error">Please create a password</string>
+    <string name="login_error">username or password incorrect</string>
+    <string name="email_error">Please enter your email address</string>
 
     <string name="myProfile">My Profile</string>
     <string name="editProfile"> Edit </string>

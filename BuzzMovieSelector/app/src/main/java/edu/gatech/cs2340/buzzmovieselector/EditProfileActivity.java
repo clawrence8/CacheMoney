@@ -68,13 +68,13 @@ public class EditProfileActivity extends AppCompatActivity {
         mDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = mNameEditText.getText().toString();
-                String username = mUsernameEditText.getText().toString();
-                String email = mEmailEditText.getText().toString();
-                String password = mPasswordEditText.getText().toString();
-                String major = mMajorEditText.getText().toString();
-                String gender = mGenderEditText.getText().toString();
-                String interests = mInterestEditText.getText().toString();
+                String name = mNameEditText.getText().toString().trim();
+                String username = mUsernameEditText.getText().toString().trim();
+                String email = mEmailEditText.getText().toString().trim();
+                String password = mPasswordEditText.getText().toString().trim();
+                String major = mMajorEditText.getText().toString().trim();
+                String gender = mGenderEditText.getText().toString().trim();
+                String interests = mInterestEditText.getText().toString().trim();
                 User currentUser = UserManager.getInstance().retrieveCurrentUser();
 
                 currentUser.setName(name);

@@ -1,23 +1,34 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.content.Context;
 import android.widget.Button;
 
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
 public class LoginActivity extends AppCompatActivity {
+
+    private UserManager userManager;
+    private EditText emailBox;
+    private EditText passBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        userManager = UserManager.getInstance();
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        emailBox = (EditText) findViewById(R.id.email);
+        passBox = (EditText) findViewById(R.id.password);
 
         Button signIn = (Button) findViewById(R.id.signIn);
         Button cancel = (Button) findViewById(R.id.cancel);
@@ -45,25 +56,28 @@ public class LoginActivity extends AppCompatActivity {
      */
 
     public void onLoginButtonPressed(View v) {
-        AuthenticationMeasure userman = UserManager.getInstance();
-        EditText nameBox = (EditText) findViewById(R.id.username);
-        EditText passBox = (EditText) findViewById(R.id.password);
-        CharSequence text;
-        if (userman.handleLoginAttempt(nameBox.getText().toString(), passBox.getText().toString())) {
-            text = "Login Success!";
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-            Toast t = Toast.makeText(context, text, duration);
-            t.show();
-            Intent intent = new Intent(this, HomePageActivity.class);
-            startActivity(intent);
-        } else {
-            text = "Login Failure!";
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-            Toast t = Toast.makeText(context, text, duration);
-            t.show();
-        }
+        String email = emailBox.getText().toString().trim();
+        String password = passBox.getText().toString().trim();
+
+        Firebase ref = userManager.getDatabase();
+        ref.authWithPassword(email, password, new Firebase.AuthResultHandler() {
+            @Override
+            public void onAuthenticated(AuthData authData) {
+                Log.i("login", "User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onAuthenticationError(FirebaseError firebaseError) {
+                // there was an error
+                Log.e("login", "error", firebaseError.toException());
+                Toast.makeText(getApplicationContext(),
+                        firebaseError.toException().getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     /**

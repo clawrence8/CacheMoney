@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="edu.gatech.cs2340.buzzmovieselector.Login">
+    android:id="@+id/login_activity_root"
+    tools:context="edu.gatech.cs2340.buzzmovieselector.LoginActivity">
 
     <Button
         android:layout_width="wrap_content"
@@ -31,12 +32,12 @@
         android:layout_alignEnd="@+id/password" />
 
     <EditText
-        android:hint="Username"
+        android:hint="Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/username"
+        android:id="@+id/email"
         android:layout_above="@+id/signIn"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="43dp" />
