@@ -22,6 +22,7 @@ public class UserManager implements AuthenticationMeasure {
     private User currentUser;
     private int userCount;
     private Firebase database = new Firebase("https://buzz-movie-selector5.firebaseio.com/");
+    private Firebase userTable = new Firebase("https://buzz-movie-selector5.firebaseio.com/Users/");
 
     /**
      *Single usermanager for the entire application
@@ -69,6 +70,14 @@ public class UserManager implements AuthenticationMeasure {
      */
     public Firebase getDatabase() {
         return database;
+    }
+
+    /**
+     * returns reference to the user table
+     * @return reference to the user table
+     */
+    public Firebase getUserTable() {
+        return userTable;
     }
 
     /**

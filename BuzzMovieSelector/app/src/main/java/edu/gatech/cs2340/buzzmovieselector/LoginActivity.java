@@ -12,13 +12,18 @@ import android.content.Context;
 import android.widget.Button;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
     private UserManager userManager;
-    private EditText emailBox;
+    private EditText usernameBox;
     private EditText passBox;
 
     @Override
@@ -27,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         userManager = UserManager.getInstance();
 
-        emailBox = (EditText) findViewById(R.id.email);
+        usernameBox = (EditText) findViewById(R.id.username);
         passBox = (EditText) findViewById(R.id.password);
 
         Button signIn = (Button) findViewById(R.id.signIn);
@@ -42,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-        public void onClick(View view) {
+            public void onClick(View view) {
                 onCancelButtonPressed(view);
             }
         });
@@ -52,17 +57,61 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Upon clicking the lgoin button, this method facilitates the validation of user input
      * for username and password
+     *
      * @param v login button view
      */
 
     public void onLoginButtonPressed(View v) {
-        String email = emailBox.getText().toString().trim();
-        String password = passBox.getText().toString().trim();
+        final String username = usernameBox.getText().toString().trim();
+        final String password = passBox.getText().toString().trim();
 
-        Firebase ref = userManager.getDatabase();
-        ref.authWithPassword(email, password, new Firebase.AuthResultHandler() {
+        final Firebase ref = userManager.getUserTable();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                               @Override
+                                               public void onDataChange(DataSnapshot dataSnapshot) {
+                                                   if (!username.equals("") && !password.equals("")) {
+                                                       if (dataSnapshot.child(username).exists() &&
+                                                               dataSnapshot.child(username)
+                                                                       .child("password").getValue()
+                                                                       .toString().equals(password)) {
+                                                           HashMap<String, String> firebaseUser = (HashMap<String, String>) dataSnapshot.child(username).getValue();
+
+
+                                                           User newUser = new User(firebaseUser.get("name"),
+                                                                   firebaseUser.get("username"),
+                                                                   firebaseUser.get("email"),
+                                                                   firebaseUser.get("password"),
+                                                                   firebaseUser.get("major"),
+                                                                   firebaseUser.get("gender"),
+                                                                   firebaseUser.get("interests"));
+
+                                                           UserManager.getInstance().setCurrentUser(newUser);
+
+                                                           Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+                                                           startActivity(intent);
+
+                                                       }
+                                                   }
+
+                                               }
+
+                                               @Override
+                                               public void onCancelled(FirebaseError firebaseError) {
+
+                                               }
+                                           }
+
+        );
+        /*ref.authWithPassword(username, password, new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("provider", authData.getProvider());
+                    if (authData.getProviderData().containsKey("username")) {
+                        map.put("username", authData.getProviderData().get("username").toString());
+                    }
+                    ref.child("users").child(authData.getUid()).setValue(map);
+
                 Log.i("login", "User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                 Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
                 startActivity(intent);
@@ -76,12 +125,13 @@ public class LoginActivity extends AppCompatActivity {
                         firebaseError.toException().getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
-        });
+        }); end username auth */
 
     }
 
     /**
      * Upon cancellation of registering for an account, this takes you to the wlecome page.
+     *
      * @param v cancel button view
      */
 

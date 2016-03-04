@@ -10,8 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
 import java.util.Map;
 
@@ -46,13 +50,13 @@ public class RegistrationActivity extends AppCompatActivity {
         mCreateProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = mNameEditText.getText().toString().trim();
-                String username = mUsernameEditText.getText().toString().trim();
-                String email = mEmailEditText.getText().toString().trim();
-                String password = mPasswordEditText.getText().toString().trim();
-                String major = mMajorEditText.getText().toString().trim();
-                String gender = mGenderEditText.getText().toString().trim();
-                String interests = mInterestEditText.getText().toString().trim();
+                final String name = mNameEditText.getText().toString().trim();
+                final String username = mUsernameEditText.getText().toString().trim();
+                final String email = mEmailEditText.getText().toString().trim();
+                final String password = mPasswordEditText.getText().toString().trim();
+                final String major = mMajorEditText.getText().toString().trim();
+                final String gender = mGenderEditText.getText().toString().trim();
+                final String interests = mInterestEditText.getText().toString().trim();
 
                 if (username.equals("")) {
                     Snackbar.make(findViewById(R.id.registration_scroll_view),
@@ -67,11 +71,30 @@ public class RegistrationActivity extends AppCompatActivity {
                     User newUser = new User(name, username, email, password, major, gender, interests);
                     UserManager.getInstance().setCurrentUser(newUser);
 //
-                    Firebase ref = UserManager.getInstance().getDatabase();
-                    ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
+                    Firebase ref = UserManager.getInstance().getUserTable();
+                    Firebase firebaseUser = ref.child(username);
+                    firebaseUser.setValue(newUser);
+
+//                    firebaseUser.child("name").setValue(name);
+//                    firebaseUser.child("email").setValue(email);
+//                    firebaseUser.child("password").setValue(password);
+//                    firebaseUser.child("username").setValue(username);
+//                    firebaseUser.child("major").setValue(major);
+//                    firebaseUser.child("gender").setValue(password);
+//                    firebaseUser.child("interests").setValue(interests);
+
+//                    Map<String, Object> map = ref.getAuth().getProviderData();
+//                    map.put("name", name);
+//                    map.put("username", username);
+//                    map.put("major", major);
+//                    map.put("gender", gender);
+//                    map.put("interests", interests);
+
+                    /*ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
                         @Override
                         public void onSuccess(Map<String, Object> result) {
                             Log.i("reg", "Successfully created user account with uid: " + result.get("uid"));
+
                             Intent homePageIntent = new Intent(RegistrationActivity.this, HomePageActivity.class);
                             startActivity(homePageIntent);
 
@@ -85,7 +108,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                     firebaseError.toException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    }); end email auth */
                 }
 
 
