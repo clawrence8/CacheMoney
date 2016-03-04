@@ -69,11 +69,14 @@ public class RegistrationActivity extends AppCompatActivity {
                             R.string.email_error, Snackbar.LENGTH_SHORT).show();
                 } else {
                     User newUser = new User(name, username, email, password, major, gender, interests);
-                    UserManager.getInstance().setCurrentUser(newUser);
+                    UserManager.getInstance().addUser(newUser);
 //
-                    Firebase ref = UserManager.getInstance().getUserTable();
-                    Firebase firebaseUser = ref.child(username);
-                    firebaseUser.setValue(newUser);
+                    //Firebase ref = UserManager.getInstance().getUserTable();
+                    //Firebase firebaseUser = ref.child(username);
+                    //firebaseUser.setValue(newUser);
+
+                    Intent homePageIntent = new Intent(RegistrationActivity.this, HomePageActivity.class);
+                    startActivity(homePageIntent);
 
 //                    firebaseUser.child("name").setValue(name);
 //                    firebaseUser.child("email").setValue(email);

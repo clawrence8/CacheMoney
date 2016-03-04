@@ -42,7 +42,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_edit_profile);
 
 
-        User currentUser = UserManager.getInstance().retrieveCurrentUser();
+        User currentUser = UserManager.getInstance().getCurrentUser();
 
         mNameEditText = (EditText) findViewById(R.id.name_edit_text);
         mUsernameEditText = (EditText) findViewById(R.id.username_edit_text);
@@ -75,7 +75,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 String major = mMajorEditText.getText().toString().trim();
                 String gender = mGenderEditText.getText().toString().trim();
                 String interests = mInterestEditText.getText().toString().trim();
-                User currentUser = UserManager.getInstance().retrieveCurrentUser();
+                User currentUser = UserManager.getInstance().getCurrentUser();
 
                 currentUser.setName(name);
                 currentUser.setUsername(username);

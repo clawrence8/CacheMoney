@@ -61,7 +61,7 @@ public class UserManager implements AuthenticationMeasure {
         usersList.put(newUser.getName(), newUser);
         userCount++;
         setCurrentUser(newUser);
-        database.child("Users").child(newUser.getUsername()).setValue(newUser);
+        userTable.child(newUser.getUsername()).setValue(newUser);
     }
 
     /**
@@ -126,7 +126,7 @@ public class UserManager implements AuthenticationMeasure {
      * @return current user of the application
      */
 
-    public User retrieveCurrentUser() {
+    public User getCurrentUser() {
         return currentUser;
     }
 
