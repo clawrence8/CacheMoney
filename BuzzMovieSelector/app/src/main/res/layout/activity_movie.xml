@@ -15,6 +15,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:id="@+id/header">
+
                 <ImageView
                     android:layout_width="110dp"
                     android:layout_height="150dp"
@@ -92,7 +93,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/userRatingTextView"
                     android:paddingLeft="10dp"
-                    android:text="User Rating: "
                     android:paddingRight="20dp"
                     android:textColor="#242524"
                     />
@@ -149,18 +149,64 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/commentEditText"
                     android:layout_alignParentRight="true"
+                    android:id="@+id/submit_review_button"
                     android:layout_marginRight="12dp"
                     android:text="Submit"/>
 
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/description"
-                android:id="@+id/userRatingsRecyclerView">
+                android:id="@+id/comments"
+                android:layout_below="@id/description">
 
-            </android.support.v7.widget.RecyclerView>
+                <TextView
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="wrap_content"
+                    android:textSize="15dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rating_username"
+                    android:layout_alignParentLeft="true"
+                    android:clickable="false"
+                    android:textColor="#010201" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rating_major"
+                    android:textSize="15dp"
+                    android:paddingRight="14dp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="#242524" />
+
+                <!--<RatingBar-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@id/rating_username"-->
+                    <!--android:id="@+id/rating_stars"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--/>-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rating_str_stars"
+                    android:textColor="#242524"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="12dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rating_comment"
+                    android:textSize="14dp"
+                    android:layout_below="@+id/rating_str_stars"
+                    android:textColor="#242524"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="12dp" />
+            </RelativeLayout>
 
         </RelativeLayout>
 
