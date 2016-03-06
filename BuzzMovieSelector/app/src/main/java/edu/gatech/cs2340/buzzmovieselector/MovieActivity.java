@@ -206,7 +206,7 @@ public class MovieActivity extends AppCompatActivity {
                 double rating;
                 float givenStars = mRatingBar.getRating();
                 String comm = mComment.getText().toString();
-                User curr = UserManager.getInstance().retrieveCurrentUser();
+                User curr = UserManager.getInstance().getCurrentUser();
 //                String currUsername = curr.getUsername();
                 String currUsername = "bobwaters";
 //                String currMajor = curr.getMajor();

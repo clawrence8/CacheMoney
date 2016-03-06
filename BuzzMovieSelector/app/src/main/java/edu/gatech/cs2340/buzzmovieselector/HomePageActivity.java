@@ -125,6 +125,7 @@ public class HomePageActivity extends AppCompatActivity {
                 return true;
 
             case R.id.logout:
+                UserManager.getInstance().setCurrentUser(null);
                 Intent intent = new Intent(this, WelcomePageActivity.class);
                 startActivity(intent);
                 return true;
