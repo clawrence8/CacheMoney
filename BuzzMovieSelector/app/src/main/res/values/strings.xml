@@ -12,6 +12,18 @@
     <string name="myProfile">My Profile</string>
     <string name="editProfile"> Edit </string>
     <string name="homeLink"> Home </string>
+    
+    <string-array name="major_list">
+        <item>Choose major:</item>
+        <item>CS</item>
+        <item>CM</item>
+        <item>CompE</item>
+        <item>EE</item>
+        <item>BME</item>
+        <item>ChemE</item>
+        <item>IE</item>
+        <item>Other</item>
+    </string-array>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
