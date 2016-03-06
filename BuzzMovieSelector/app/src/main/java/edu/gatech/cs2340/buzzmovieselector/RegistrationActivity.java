@@ -23,7 +23,7 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.Map;
 
-public class RegistrationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class RegistrationActivity extends AppCompatActivity {
 
     private EditText mNameEditText;//the m is just a convention to denote instance data for the class
     private EditText mUsernameEditText;
@@ -59,7 +59,19 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
+
         mMajorSpinner.setAdapter(adapter);
+        mMajorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mMajor = (String) adapterView.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //
+            }
+        });
 
 
 
@@ -70,7 +82,6 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                 final String username = mUsernameEditText.getText().toString().trim();
                 final String email = mEmailEditText.getText().toString().trim();
                 final String password = mPasswordEditText.getText().toString().trim();
-                //final String major = mMajorEditText.getText().toString().trim();
                 final String gender = mGenderEditText.getText().toString().trim();
                 final String interests = mInterestEditText.getText().toString().trim();
 
@@ -83,51 +94,17 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                 } else if (email.equals("")) {
                     Snackbar.make(findViewById(R.id.registration_scroll_view),
                             R.string.email_error, Snackbar.LENGTH_SHORT).show();
+                } else if (mMajor.equals("Chose Major:") || mMajor.equals("")) {
+                    Snackbar.make(findViewById(R.id.registration_scroll_view),
+                            R.string.email_error, Snackbar.LENGTH_SHORT).show();
                 } else {
                     User newUser = new User(name, username, email, password, mMajor, gender, interests);
                     UserManager.getInstance().addUser(newUser);
-//
-                    //Firebase ref = UserManager.getInstance().getUserTable();
-                    //Firebase firebaseUser = ref.child(username);
-                    //firebaseUser.setValue(newUser);
 
                     Intent homePageIntent = new Intent(RegistrationActivity.this, HomePageActivity.class);
                     startActivity(homePageIntent);
 
-//                    firebaseUser.child("name").setValue(name);
-//                    firebaseUser.child("email").setValue(email);
-//                    firebaseUser.child("password").setValue(password);
-//                    firebaseUser.child("username").setValue(username);
-//                    firebaseUser.child("major").setValue(major);
-//                    firebaseUser.child("gender").setValue(password);
-//                    firebaseUser.child("interests").setValue(interests);
 
-//                    Map<String, Object> map = ref.getAuth().getProviderData();
-//                    map.put("name", name);
-//                    map.put("username", username);
-//                    map.put("major", major);
-//                    map.put("gender", gender);
-//                    map.put("interests", interests);
-
-                    /*ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
-                        @Override
-                        public void onSuccess(Map<String, Object> result) {
-                            Log.i("reg", "Successfully created user account with uid: " + result.get("uid"));
-
-                            Intent homePageIntent = new Intent(RegistrationActivity.this, HomePageActivity.class);
-                            startActivity(homePageIntent);
-
-                        }
-
-                        @Override
-                        public void onError(FirebaseError firebaseError) {
-                            // there was an error
-                            Log.i("reg", firebaseError.toException().getMessage());
-                            Toast.makeText(getApplicationContext(),
-                                    firebaseError.toException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }); end email auth */
                 }
 
 
@@ -144,16 +121,5 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         });
 
 
-    }
-
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-         mMajor = (String) parent.getSelectedItem().toString();
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
     }
 }
