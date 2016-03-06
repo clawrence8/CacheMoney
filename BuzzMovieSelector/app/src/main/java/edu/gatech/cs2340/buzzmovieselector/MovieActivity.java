@@ -6,8 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,15 +22,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
-
+import com.firebase.client.ValueEventListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +52,9 @@ public class MovieActivity extends AppCompatActivity {
     private TextView mGenre;
     private TextView mDescription;
     private Button mSubmitReview;
+    private Button mViewMoreCommentsButton;
     private RatingBar mRatingBar;
+    private double ratingSum;
     private TextView mUsernameTextView;
     private TextView mMajorTextView;
     private TextView mCommentTextView;
@@ -62,9 +63,12 @@ public class MovieActivity extends AppCompatActivity {
     private EditText mComment;
     private String url;
     private String genrelist = "";
+    private double numReviews;
     private Movie m;
     private String mRating;
     private Firebase database = new Firebase("https://buzz-movie-selector5.firebaseio.com/");
+    private Firebase movieTable = new Firebase("https://buzz-movie-selector5.firebaseio.com/movies");
+
 
     /**
      * Creates new intent to launch Movie Activity to display a selected movie's details
@@ -87,11 +91,13 @@ public class MovieActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Firebase.setAndroidContext(this);
         Intent intent = getIntent();
         final String movieId = intent.getStringExtra("id");
         setContentView(R.layout.activity_movie);
         url = "http://api.rottentomatoes.com/api/public/v1.0/movies/" + movieId + ".json?apikey=yedukp76ffytfuy24zsqk7f5";
 
+        m = new Movie();
         queue = Volley.newRequestQueue(this);
 
         mTitle = (TextView) findViewById(R.id.movieTitleTextView);
@@ -106,7 +112,8 @@ public class MovieActivity extends AppCompatActivity {
         mMajorTextView = (TextView) findViewById(R.id.rating_major);
         mCommentTextView = (TextView) findViewById(R.id.rating_comment);
         mRatingTextView = (TextView) findViewById(R.id.rating_str_stars);
-
+        mRatingBar = (RatingBar) findViewById(R.id.rating_bar);
+        mComment = (EditText) findViewById(R.id.commentEditText);
 
         /**
          * Make request to get Movie info from Rotten Tomatoes API
@@ -118,8 +125,6 @@ public class MovieActivity extends AppCompatActivity {
                         //handle a valid response coming back.  Getting this string mainly for debug
                         response = resp.toString();
                         Log.i("response", response);
-
-                        m = new Movie();
 
                         JSONObject posters = resp.optJSONObject("posters");
                         String mImageUrl = posters.optString("thumbnail");
@@ -136,39 +141,50 @@ public class MovieActivity extends AppCompatActivity {
                         }
 
                         m.setMovieId(movieId);
-//                        m.setMovieImdbId(imdb);
                         m.setMovieName(resp.optString("title"));
                         m.setMovieDescription(resp.optString("synopsis"));
                         m.setMovieGenre(genrelist);
                         m.setMovieLength(resp.optString("runtime"));
                         m.setMovieMpaRating(resp.optString("mpaa_rating"));
                         m.setMovieYear(resp.optString("year"));
-                        m.setAvgRating(0);
+                        mUserRatingTextView.setText("Average Rating: No user ratings yet");
+                        mRatingTextView.setText("No user reviews yet. Leave one now!");
 
-//                        Firebase revs = database.child("movies").child(movieId).child("movieReviews");
-//                        Query q = revs.orderByKey();
-//                        q.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(DataSnapshot dataSnapshot) {
-//                                if(dataSnapshot.getChildrenCount() > 0) {
-//                                    for(int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
-//                                        DataSnapshot individualReview = dataSnapshot.child(Integer.toString(i));
-//                                        Review rev = individualReview.getValue(Review.class);
-//                                        Map newReview = new HashMap<String,String>();
-//                                        newReview.put("username",rev.getUsername());
-//                                        newReview.put("major",rev.getMajor());
-//                                        newReview.put("numStars",rev.getRating());
-//                                        newReview.put("comment",rev.getComment());
-//                                        m.addReview(newReview);
-//                                    }
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(FirebaseError firebaseError) {
-//
-//                            }
-//                        });
+                        movieTable.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                DataSnapshot reviews = dataSnapshot.child(movieId).child("movieReviews");
+                                if (reviews != null) {
+                                    Iterable<DataSnapshot> reviewsIter = reviews.getChildren();
+                                    for (DataSnapshot i : reviewsIter) {
+                                        String numStars = (String) i.child("numStars").getValue();
+                                        String username = (String) i.child("username").getValue();
+                                        String major = (String) i.child("major").getValue();
+                                        String comment = (String) i.child("comment").getValue();
+
+                                        Map newReview = new HashMap<String, String>();
+                                        newReview.put("username", username);
+                                        newReview.put("major", major);
+                                        newReview.put("numStars", numStars);
+                                        newReview.put("comment", comment);
+                                        m.addReview(newReview);
+                                        ratingSum += Double.parseDouble(numStars);
+                                        numReviews++;
+
+                                        mUserRatingTextView.setText("Average Rating: " + String.valueOf(ratingSum / numReviews) + " stars");
+                                        mRatingTextView.setText(numStars + " stars");
+                                        mCommentTextView.setText("\"" + comment + "\"");
+                                        mUsernameTextView.setText("User: " + username);
+                                        mMajorTextView.setText("Major: " + major);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
 
                         mTitle.setText(m.getMovieName());
                         mDescription.setText("Description: " + m.getMovieDescription());
@@ -176,9 +192,6 @@ public class MovieActivity extends AppCompatActivity {
                         mGenre.setText("Genres: " + m.getMovieGenre());
                         mLength.setText("Runtime: " + m.getMovieLength() + " minutes");
                         mYear.setText(m.getMovieYear());
-                        mUserRatingTextView.setText("User Rating: No reviews yet");
-
-//                        database.child("movies").child(m.getMovieId()).setValue(m);
                     }
                 }, new Response.ErrorListener() {
 
@@ -193,9 +206,6 @@ public class MovieActivity extends AppCompatActivity {
         //this actually queues up the async response with Volley
         queue.add(jsObjRequest);
 
-        mRatingBar = (RatingBar) findViewById(R.id.rating_bar);
-        mComment = (EditText) findViewById(R.id.commentEditText);
-
         /**
          * This updates reviews and adds to database
          */
@@ -206,113 +216,60 @@ public class MovieActivity extends AppCompatActivity {
                 double rating;
                 float givenStars = mRatingBar.getRating();
                 String comm = mComment.getText().toString();
-                User curr = UserManager.getInstance().retrieveCurrentUser();
-//                String currUsername = curr.getUsername();
-                String currUsername = "bobwaters";
-//                String currMajor = curr.getMajor();
-                String currMajor = "CS";
+                User curr = UserManager.getInstance().getCurrentUser();
+                String currUsername = curr.getUsername();
+                String currMajor = curr.getMajor();
                 String s = Float.toString(givenStars);
 
-                Map<String, String> newReview = new HashMap<String, String>();
-                newReview.put("username", currUsername);
-                newReview.put("major", currMajor);
-                newReview.put("numStars", s);
-                newReview.put("comment", comm);
-
-                if(m.getAvgRating() != givenStars && m.getAvgRating() != 0) {
-                    rating = (m.getAvgRating() + givenStars) / 2;
+                if (comm.equals("")) {
+                    Snackbar.make(findViewById(R.id.activity_movie_scrollview), "Please leave a comment", Snackbar.LENGTH_SHORT).show();
+                } else if (mRatingBar.getRating() == 0.0) {
+                    Snackbar.make(findViewById(R.id.activity_movie_scrollview), "Please submit a rating of at least one star", Snackbar.LENGTH_SHORT).show();
                 } else {
-                    rating = givenStars;
+
+                    Map<String, String> newReview = new HashMap<String, String>();
+                    newReview.put("username", currUsername);
+                    newReview.put("major", currMajor);
+                    newReview.put("numStars", s);
+                    newReview.put("comment", comm);
+
+                    ratingSum += givenStars;
+                    numReviews++;
+                    double avg = ratingSum / numReviews;
+                    DecimalFormat df = new DecimalFormat("#.#");
+                    mUserRatingTextView.setText("Average Rating: " + df.format(avg) + " stars");
+
+                    m.addReview(newReview);
+
+                    database.child("movies").child(m.getMovieId()).setValue(m);
+
+                    //review submission complete
+                    Toast.makeText(MovieActivity.this, "Review submitted!", Toast.LENGTH_SHORT).show();
+                    mComment.setText("");
+                    mRatingBar.setRating(0F);
+
+                    if (mUsernameTextView.getText().equals("")) {
+                        mRatingTextView.setText(s + " stars");
+                        mCommentTextView.setText("\"" + comm + "\"");
+                        mUsernameTextView.setText("User: " + currUsername);
+                        mMajorTextView.setText("Major: " + currMajor);                    }
                 }
-
-                m.setAvgRating((double) rating);
-                mUserRatingTextView.setText("User Rating: " + String.valueOf(m.getAvgRating()) + " stars");
-
-                m.addReview(newReview);
-
-                database.child("movies").child(m.getMovieId()).setValue(m);
-
-                //complete
-                Toast.makeText(MovieActivity.this, "Review submitted!", Toast.LENGTH_SHORT).show();
-                mComment.setText("");
-                mRatingBar.setRating(0F);
-
-//                Map<String, Object> revs = new HashMap<String, Object>();
-//                revs.put("review", newReview);
-//                database.child("movies").child(m.getMovieId()).push().setValue(revs);
-
-//                database.addChildEventListener(new ChildEventListener() {
-//                    @Override
-//                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                        DataSnapshot movieObj = dataSnapshot.child("movies");
-//                        Movie movie = movieObj.getValue(Movie.class);
-//                        if(movie.getMovieReviews() != null) {
-//                            ArrayList<Map> thisReviews = movie.getMovieReviews();
-//                            if(thisReviews.size() != 0) {
-//                                Map firstReviews = thisReviews.get(0);
-//                                mUsernameTextView.setText("Username: " + firstReviews.get("username").toString());
-//                                mMajorTextView.setText("Major: " + firstReviews.get("major").toString());
-//                                mCommentTextView.setText(firstReviews.get("comment").toString());
-//                                mRatingTextView.setText("Rating: " + firstReviews.get("numStars").toString());
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(FirebaseError firebaseError) {
-//
-//                    }
-//                });
             }
         });
 
-//        Query q = database.orderByChild("movies/"+movieId+"/movieReviews/0/numStars");
-//        q.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                Review movie = dataSnapshot.getValue(Review.class);
-//                mRating = movie.getRating();
-//                mUserRatingTextView.setText(mRating);
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//
-//            }
-//        });
+        mViewMoreCommentsButton = (Button) findViewById(R.id.view_more_comments_button);
+        mViewMoreCommentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
+    /**
+     * This functions as an AsyncTask to download images to appear in our app's views
+     * based on a given url
+     */
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
@@ -332,11 +289,8 @@ public class MovieActivity extends AppCompatActivity {
             }
             return mIcon11;
         }
-
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
     }
-
-
 }

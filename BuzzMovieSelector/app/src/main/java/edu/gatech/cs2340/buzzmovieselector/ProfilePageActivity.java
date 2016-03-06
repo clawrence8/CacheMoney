@@ -22,7 +22,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
         UserManager userManager = UserManager.getInstance();
-        User currentUser = userManager.retrieveCurrentUser();
+        User currentUser = userManager.getCurrentUser();
         //initialize
         userNameTextView = (TextView)findViewById(R.id.userName);
         genderLabelTextView = (TextView) findViewById(R.id.genderLabel);

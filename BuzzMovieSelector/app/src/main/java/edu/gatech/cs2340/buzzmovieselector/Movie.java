@@ -4,6 +4,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
+import com.firebase.client.Firebase;
 
 import java.io.Serializable;
 import java.util.ArrayList;

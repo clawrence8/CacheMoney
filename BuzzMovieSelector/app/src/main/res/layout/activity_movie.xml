@@ -4,6 +4,7 @@
     android:layout_height="fill_parent"
     android:fillViewport="true"
     android:scrollbars = "vertical"
+    android:id="@+id/activity_movie_scrollview"
     android:scrollbarStyle="insideInset">
 
         <RelativeLayout
@@ -94,6 +95,7 @@
                     android:id="@+id/userRatingTextView"
                     android:paddingLeft="10dp"
                     android:paddingRight="20dp"
+                    android:textSize="16dp"
                     android:textColor="#242524"
                     />
 
@@ -112,9 +114,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/labelRatingTextView"
-                    android:text="Leave a Review"
+                    android:text="Leave a Review:"
                     android:layout_below="@id/movieDescriptionTextView"
                     android:textColor="#242524"
+                    android:textStyle="bold"
                     android:paddingLeft="10dp"
                     android:paddingTop="12dp"/>
 
@@ -124,7 +127,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_height="wrap_content"
                     android:id="@+id/rating_bar"
-                    android:paddingTop="10dp"
+                    android:paddingTop="5dp"
                     android:numStars="5"
                     android:stepSize="1.0" />
 
@@ -158,8 +161,30 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:id="@+id/comments"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="12dp"
                 android:layout_below="@id/description">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#242524"
+                    android:id="@+id/top_comment_text_view"
+                    android:textStyle="bold"
+                    android:text="Top Review: "/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rating_str_stars"
+                    android:layout_below="@id/top_comment_text_view"
+                    android:textSize="16dp"
+                    android:textColor="#242524"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="12dp"
+                    />
 
                 <TextView
                     android:layout_marginLeft="12dp"
@@ -167,6 +192,7 @@
                     android:textSize="15dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/rating_username"
+                    android:layout_below="@id/rating_str_stars"
                     android:layout_alignParentLeft="true"
                     android:clickable="false"
                     android:textColor="#010201" />
@@ -177,35 +203,29 @@
                     android:id="@+id/rating_major"
                     android:textSize="15dp"
                     android:paddingRight="14dp"
+                    android:layout_below="@id/rating_str_stars"
                     android:layout_alignParentRight="true"
                     android:textColor="#242524" />
-
-                <!--<RatingBar-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@id/rating_username"-->
-                    <!--android:id="@+id/rating_stars"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--/>-->
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/rating_str_stars"
-                    android:textColor="#242524"
-                    android:layout_centerHorizontal="true"
-                    android:paddingLeft="12dp"
-                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rating_comment"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:textSize="14dp"
-                    android:layout_below="@+id/rating_str_stars"
+                    android:layout_below="@+id/rating_username"
                     android:textColor="#242524"
-                    android:layout_centerHorizontal="true"
                     android:paddingLeft="12dp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="View More"
+                    android:layout_below="@id/rating_comment"
+                    android:id="@+id/view_more_comments_button"
+                    android:layout_centerHorizontal="true"/>
             </RelativeLayout>
 
         </RelativeLayout>
