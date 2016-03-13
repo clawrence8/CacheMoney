@@ -12,7 +12,7 @@
     <string name="myProfile">My Profile</string>
     <string name="editProfile"> Edit </string>
     <string name="homeLink"> Home </string>
-    
+
     <string-array name="major_list">
         <item>Choose major:</item>
         <item>CS</item>
@@ -23,6 +23,12 @@
         <item>ChemE</item>
         <item>IE</item>
         <item>Other</item>
+    </string-array>
+
+    <string-array name="user_status_list">
+        <item>Active</item>
+        <item>Banned</item>
+        <item>Locked</item>
     </string-array>
 
     <!-- Strings related to login -->
@@ -112,4 +118,5 @@
     <string name="title_activity_new_releases">NewReleases</string>
     <string name="title_activity_new_dvds">NewDVDs</string>
     <string name="title_activity_movie">MovieActivity</string>
+    <string name="title_activity_admin">AdminActivity</string>
 </resources>

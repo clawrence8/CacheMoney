@@ -52,7 +52,11 @@
             android:name=".MovieActivity"
             android:label="@string/title_activity_movie"
             android:parentActivityName=".ItemListActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AdminActivity"
+            android:label="@string/title_activity_admin"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

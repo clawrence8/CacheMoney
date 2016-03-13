@@ -38,7 +38,10 @@ public class LoginActivity extends AppCompatActivity {
         Button signIn = (Button) findViewById(R.id.signIn);
         Button cancel = (Button) findViewById(R.id.cancel);
 
+
         signIn.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
                 onLoginButtonPressed(view);
@@ -62,9 +65,13 @@ public class LoginActivity extends AppCompatActivity {
      */
 
     public void onLoginButtonPressed(View v) {
+
         final String username = usernameBox.getText().toString().trim();
         final String password = passBox.getText().toString().trim();
-
+        if (isAdmin(username, password)) {
+            Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+            startActivity(intent);
+        }
         final Firebase ref = userManager.getUserTable();
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
                                                @Override
@@ -139,4 +146,10 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, WelcomePageActivity.class);
         startActivity(intent);
     }
+    public boolean isAdmin(String userName, String passWord) {
+        Admin admin = new Admin();
+        return userName.equals(admin.getAdminUserName())
+                && passWord.equals(admin.getAdminPassWord());
+    }
+
 }

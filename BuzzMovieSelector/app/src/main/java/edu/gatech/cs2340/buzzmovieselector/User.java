@@ -15,7 +15,7 @@ public class User {
     private String mInterests;
     private int loginAttempts;
     private String username;
-
+    private String mUserStatus;
     /**
      *
      * @param name user name
@@ -36,6 +36,7 @@ public class User {
         mMajor = major;
         mGender = gender;
         mInterests = interests;
+        mUserStatus = "Active";
     }
 
     /**
@@ -198,6 +199,22 @@ public class User {
 
     public void setLoginAttempts(int loginAttempts) {
         this.loginAttempts = loginAttempts;
+    }
+
+    /**
+     *
+     * @return the current users status
+     */
+    public String getStatus(){
+        return mUserStatus;
+    }
+
+    /**
+     *
+     * @param status the account of status of the current user
+     */
+    public void setUserStatus(String status) {
+        this.mUserStatus = status;
     }
 
 }

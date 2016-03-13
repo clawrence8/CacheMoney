@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="name"
+        android:id="@+id/nameLabelTextView"
+        android:layout_marginTop="64dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="21dp"
+        android:layout_marginStart="21dp" />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Status:"
+        android:id="@+id/statusLabelTextView"
+        android:layout_alignTop="@+id/nameLabelTextView"
+        android:layout_toRightOf="@+id/nameLabelTextView"
+        android:layout_toEndOf="@+id/nameLabelTextView" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_status_spinner"
+        android:layout_alignBaseline="@+id/statusLabelTextView"
+        android:layout_alignBottom="@+id/statusLabelTextView"
+        android:layout_toRightOf="@+id/statusLabelTextView"
+        android:layout_toEndOf="@+id/statusLabelTextView"
+        android:spinnerMode="dropdown" />
+
+</RelativeLayout>
