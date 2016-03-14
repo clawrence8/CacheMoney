@@ -295,7 +295,7 @@ public class ItemListActivity extends AppCompatActivity {
         public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
-
+        @Override
         protected Bitmap doInBackground(String... urls) {
             String urldisplay = urls[0];
             Bitmap mIcon11 = null;
@@ -308,7 +308,7 @@ public class ItemListActivity extends AppCompatActivity {
             }
             return mIcon11;
         }
-
+        @Override
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }

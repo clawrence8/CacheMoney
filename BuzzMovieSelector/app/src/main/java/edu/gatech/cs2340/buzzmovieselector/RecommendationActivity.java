@@ -26,6 +26,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 
+/**
+ * The user is taken to this activity when they want to view recommended movies based on major
+ * @author Clayton Lawrence
+ */
 public class RecommendationActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -107,6 +111,7 @@ public class RecommendationActivity extends AppCompatActivity {
             this.bmImage = bmImage;
         }
 
+        @Override
         protected Bitmap doInBackground(String... urls) {
             String urldisplay = urls[0];
             Bitmap mIcon11 = null;
@@ -119,7 +124,7 @@ public class RecommendationActivity extends AppCompatActivity {
             }
             return mIcon11;
         }
-
+        @Override
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }

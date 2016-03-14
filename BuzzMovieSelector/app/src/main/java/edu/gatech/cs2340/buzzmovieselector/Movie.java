@@ -313,12 +313,16 @@ public class Movie implements Serializable, Comparable<Movie> {
 
     /**
      *
-     * @param majorRating the avg rating based on major
+     * @param majorRating the new avg rating based on major
      */
     public void setMajorRating(double majorRating) {
         this.majorRating = majorRating;
     }
 
+    /**
+     *
+     * @return the current average rating of the movie based on major
+     */
     public Double getMajorRating () {
         return majorRating;
     }
