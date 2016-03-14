@@ -13,7 +13,7 @@
     <string name="myProfile">My Profile</string>
     <string name="editProfile"> Edit </string>
     <string name="homeLink"> Home </string>
-    
+
     <string-array name="major_list">
         <item>Choose major:</item>
         <item>CS</item>

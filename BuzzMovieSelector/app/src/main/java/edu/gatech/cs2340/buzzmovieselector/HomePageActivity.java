@@ -19,7 +19,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
@@ -27,6 +30,10 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.android.volley.RequestQueue;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 
 public class HomePageActivity extends AppCompatActivity {
@@ -36,8 +43,11 @@ public class HomePageActivity extends AppCompatActivity {
     private Button tempButton;
     private Button newReleases;
     private Button newDvd;
+    private Button recButton;
 
     private RequestQueue queue;
+    private ArrayList<Movie> recommendedMovies = new ArrayList<Movie>();
+    private PriorityQueue<Movie> pq = new PriorityQueue<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +76,7 @@ public class HomePageActivity extends AppCompatActivity {
 
         newReleases = (Button) findViewById(R.id.newReleases);
         newDvd = (Button) findViewById(R.id.newDVD);
+        recButton = (Button) findViewById(R.id.rec_button);
 
         newReleases.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +95,68 @@ public class HomePageActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomePageActivity.this, ItemListActivity.class);
                 intent.putExtra("button", buttonPressed);
                 startActivity(intent);
+            }
+        });
+
+        recButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomePageActivity.this, RecommendationActivity.class);
+                startActivity(intent);
+//                Firebase movieTable = UserManager.getInstance().getDatabase().child("movies");
+//                movieTable.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        Iterable movies = dataSnapshot.getChildren();
+//                        Iterator iterator = movies.iterator();
+//                        while (iterator.hasNext()) {
+//                            try {
+//                                int sum = 0;
+//                                int counter = 0;
+//                                int avg = 0;
+//                                //snapshot points to current movie
+//                                DataSnapshot snapshot = ((DataSnapshot) iterator.next());
+//                                HashMap<String, String> snapShotMap = ((HashMap) snapshot.getValue());
+//                                Object finesseList = snapShotMap.get("movieReviews");
+//                                //Grab list of reviews for current movie
+//                                ArrayList reviewList = (ArrayList) finesseList;
+//                                for (Object item : reviewList) {
+//                                    HashMap<String, String> review = (HashMap) item;
+//                                    String major = review.get("major");
+//                                    //Filters out reviews based on current user's major
+//                                    if (major.equals(UserManager.getInstance().getCurrentUser().getMajor())) {
+//                                        double rating = Double.parseDouble(review.get("numStars"));
+//                                        sum += rating;
+//                                        counter++;
+//                                    }
+//
+//
+//                                }
+//                                //calculate avg review for ___ majors
+//                                if (counter > 0) {
+//                                    avg = sum / counter;
+//                                    Movie movie = new Movie(snapShotMap);
+//                                    movie.setMajorRating(avg);
+//                                    recommendedMovies.add(movie);
+//                                    pq.add(movie);
+//
+//                                }
+//                            } catch (IndexOutOfBoundsException e) {
+//                                Log.e("error", "index out of bounds \n", e);
+//                            }
+//
+//                        }
+//
+//                        recommendedMovies.toString();
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(FirebaseError firebaseError) {
+//
+//                    }
+//                });
             }
         });
 

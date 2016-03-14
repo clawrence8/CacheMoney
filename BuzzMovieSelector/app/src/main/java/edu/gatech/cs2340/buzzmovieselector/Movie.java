@@ -8,6 +8,7 @@ import com.firebase.client.Firebase;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,7 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by julianeuman on 2/21/16.
  */
-public class Movie implements Serializable {
+public class Movie implements Serializable, Comparable<Movie> {
 
     private String movieId;
     private String movieImdbId;
@@ -28,6 +29,7 @@ public class Movie implements Serializable {
     private String movieDescription;
     private String movieRating;
     private double avgRating;
+    private double majorRating;
     private ArrayList<Map> movieReviews = new ArrayList<>();
     private String numstars;
 
@@ -59,6 +61,32 @@ public class Movie implements Serializable {
         this.movieRating = movieRating;
         this.moviePoster = moviePoster;
         this.avgRating = avgRating;
+    }
+
+    public Movie(HashMap<String, String> dataSnapshot) {
+        this.movieName = dataSnapshot.get("movieName");
+        //this.movieImdbId = dataSnapshot.get("movieId");
+        this.movieYear = dataSnapshot.get("movieYear");
+        this.movieId = dataSnapshot.get("movieId");
+        this.movieLength = dataSnapshot.get("movieLength");
+        this.movieMpaRating = dataSnapshot.get("movieMpaRating");
+        this.movieDescription = dataSnapshot.get("movieDescription");
+        this.movieGenre = dataSnapshot.get("movieGenre");
+        this.movieRating = dataSnapshot.get("movieMajorRating");
+        this.moviePoster = dataSnapshot.get("moviePoster");
+        //this.avgRating = Double.parseDouble(dataSnapshot.get("avgRating").toString());
+    }
+
+    @Override
+    public int compareTo(Movie other) {
+        //Looks backwards because I want to represent descending order
+        if (this.majorRating < other.getMajorRating()) {
+            return 1;
+        } else if (this.majorRating > other.getMajorRating()) {
+            return -1;
+        } else {
+            return this.movieName.compareTo(other.getMovieName());
+        }
     }
 
     /**
@@ -281,5 +309,17 @@ public class Movie implements Serializable {
      */
     public void setAvgRating(double avgRating) {
         this.avgRating = avgRating;
+    }
+
+    /**
+     *
+     * @param majorRating the avg rating based on major
+     */
+    public void setMajorRating(double majorRating) {
+        this.majorRating = majorRating;
+    }
+
+    public Double getMajorRating () {
+        return majorRating;
     }
 }

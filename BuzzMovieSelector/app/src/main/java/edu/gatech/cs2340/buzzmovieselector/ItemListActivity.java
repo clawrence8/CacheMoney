@@ -70,7 +70,8 @@ public class ItemListActivity extends AppCompatActivity {
         if (typeButton.equals("search")) {
             query = getIntent().getStringExtra("query");
             Log.i("queryExtra", query);
-            url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=" + query.trim()
+            url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=" +
+                    query.trim().replaceAll(" ", "%20")
                     + "&page_limit=10&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
 
         } else if (typeButton.equals("newReleases")) {
@@ -275,6 +276,7 @@ public class ItemListActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(ItemListActivity.this, MovieActivity.class);
                 intent.putExtra("id", mItem.getMovieId());
+                intent.putExtra("listUrl", mItem.getMoviePoster());
                 ItemListActivity.this.startActivity(intent);
             }
         }

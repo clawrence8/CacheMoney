@@ -39,4 +39,14 @@
         android:layout_alignTop="@+id/newReleases"
         android:layout_toRightOf="@+id/temp_button"
         android:layout_toEndOf="@+id/temp_button" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recommendations"
+        android:id="@+id/rec_button"
+        android:layout_below="@+id/newReleases"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="83dp" />
 </RelativeLayout>

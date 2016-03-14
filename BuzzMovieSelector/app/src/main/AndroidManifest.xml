@@ -52,7 +52,13 @@
             android:name=".MovieActivity"
             android:label="@string/title_activity_movie"
             android:parentActivityName=".ItemListActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".RecommendationActivity"
+            android:label="Recommended Movies"
+            android:parentActivityName=".HomePageActivity">
+
+        </activity>
     </application>
 
 </manifest>
