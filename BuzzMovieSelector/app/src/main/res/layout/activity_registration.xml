@@ -166,7 +166,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/major_spinner"
-                    android:spinnerMode="dropdown" />
+                    android:spinnerMode="dropdown"
+                    android:layout_marginTop="5dp" />
 
                 <EditText
                     android:id="@+id/gender_edit_text"

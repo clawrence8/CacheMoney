@@ -25,6 +25,11 @@ public class LoginActivity extends AppCompatActivity {
     private UserManager userManager;
     private EditText usernameBox;
     private EditText passBox;
+    private Toast lockedToast;
+    private Toast bannedToast;
+    private String lockedMessage;
+    private String bannedMessage;
+    private Firebase userTable = new Firebase("https://buzz-movie-selector5.firebaseio.com/Users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,20 +88,40 @@ public class LoginActivity extends AppCompatActivity {
                                                                        .toString().equals(password)) {
                                                            HashMap<String, String> firebaseUser = (HashMap<String, String>) dataSnapshot.child(username).getValue();
 
+                                                           // Check if user is Banned
+                                                           int duration = Toast.LENGTH_LONG;
+                                                           if (firebaseUser.get("status").equals("Ban")) {
+                                                               bannedMessage = "Your account has been banned!";
+                                                               bannedToast = Toast.makeText(LoginActivity.this, bannedMessage, duration);
+                                                               bannedToast.show();
+                                                           } else {
+                                                               User newUser = new User(firebaseUser.get("name"),
+                                                                       firebaseUser.get("username"),
+                                                                       firebaseUser.get("email"),
+                                                                       firebaseUser.get("password"),
+                                                                       firebaseUser.get("major"),
+                                                                       firebaseUser.get("gender"),
+                                                                       firebaseUser.get("interests"));
 
-                                                           User newUser = new User(firebaseUser.get("name"),
-                                                                   firebaseUser.get("username"),
-                                                                   firebaseUser.get("email"),
-                                                                   firebaseUser.get("password"),
-                                                                   firebaseUser.get("major"),
-                                                                   firebaseUser.get("gender"),
-                                                                   firebaseUser.get("interests"));
+                                                               UserManager.getInstance().setCurrentUser(newUser);
 
-                                                           UserManager.getInstance().setCurrentUser(newUser);
-
-                                                           Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-                                                           startActivity(intent);
-
+                                                               Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+                                                               startActivity(intent);
+                                                           }
+                                                       } else if (dataSnapshot.child(username).exists()) {
+                                                           //until we clean this up
+                                                           HashMap<String, String> firebaseUser2 = (HashMap<String, String>) dataSnapshot.child(username).getValue();
+                                                           Object tempHolder = firebaseUser2.get("loginAttempts");
+                                                           Long loginAttempts = (Long) tempHolder;
+                                                           int duration = Toast.LENGTH_LONG;
+                                                           if (loginAttempts >= 3) {
+                                                               lockedMessage = "Your account has been locked!";
+                                                               lockedToast = Toast.makeText(LoginActivity.this, lockedMessage, duration);
+                                                               lockedToast.show();
+                                                               userTable.child(username).child("status").setValue("Locked");
+                                                           }
+                                                           loginAttempts++;
+                                                           userTable.child(username).child("loginAttempts").setValue(loginAttempts);
                                                        }
                                                    }
 

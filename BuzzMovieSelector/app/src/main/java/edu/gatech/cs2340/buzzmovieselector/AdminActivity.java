@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +10,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -43,6 +48,7 @@ public class AdminActivity extends AppCompatActivity {
     private List<String> userList;
     private List<String> userStatusList;
     private Set<String> userSet;
+    private String mStatus = "";
     private HashMap<String, String> firebaseUser;
 //datasnapshot.getvalues
 
@@ -65,14 +71,15 @@ public class AdminActivity extends AppCompatActivity {
                 userList = new ArrayList<String>();
                 userStatusList = new ArrayList<String>();
                 for(String name : userSet) {
-                    userList.add(name);
-                    firebaseUser = (HashMap<String, String>) dataSnapshot.child(name).getValue();
-                    if (firebaseUser.get("status") != null) {
-                        userStatusList.add(firebaseUser.get("status"));
-                    } else {
-                        userStatusList.add("Active");
+                    if (name != null) {
+                        userList.add(name);
+                        firebaseUser = (HashMap<String, String>) dataSnapshot.child(name).getValue();
+                        if (firebaseUser.get("status") != null) {
+                            userStatusList.add(firebaseUser.get("status"));
+                        } else {
+                            userStatusList.add("Active");
+                        }
                     }
-
                 }
                 changeView();
 
@@ -87,7 +94,9 @@ public class AdminActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * This method changes to our new list of user accounts
+     */
     private void changeView() {
         setContentView(R.layout.activity_admin);
 
@@ -163,12 +172,11 @@ public class AdminActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             List<String>  spinnerStringList = new ArrayList<String>();
             spinnerStringList.add(mStatusValues.get(position));
-            spinnerStringList.add("Active");
-            spinnerStringList.add("Locked");
-            spinnerStringList.add("Banned");
+            spinnerStringList.add("Ban");
+            spinnerStringList.add("Unlock");
 
             CustomAdapter dataAdapter = new CustomAdapter(AdminActivity.this, android.R.layout.simple_spinner_item, spinnerStringList, 0);
 
@@ -176,6 +184,25 @@ public class AdminActivity extends AppCompatActivity {
             holder.mNameLabelTextView.setText(mNameValues.get(position));
             holder.mStatusLabelTextView.setText("Status:");
             holder.mStatusSpinner.setAdapter(dataAdapter);
+            holder.mStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    mStatus = (String) adapterView.getSelectedItem().toString();
+                    userTable.child(mNameValues.get(position)).child("status").setValue(mStatus);
+                    if (mStatus.equals("Unlock")) {
+                        userTable.child((mNameValues.get(position))).child("loginAttempts").setValue(0);
+                        userTable.child((mNameValues.get(position))).child("status").setValue("Active");
+                    }
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    //
+                }
+            });
+
+
 
         }
 
@@ -217,9 +244,34 @@ public class AdminActivity extends AppCompatActivity {
                 return "Users Accounts";
                 // return super.toString() + " '" + mContentView.getText() + "'";
             }
-
-
         }
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_admin_account, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id) {
+            case R.id.logout:
+                UserManager.getInstance().setCurrentUser(null);
+                Intent intent = new Intent(this, WelcomePageActivity.class);
+                startActivity(intent);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
 

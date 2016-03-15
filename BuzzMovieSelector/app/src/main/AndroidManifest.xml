@@ -55,8 +55,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".AdminActivity"
-            android:label="@string/title_activity_admin"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/adminPage"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
