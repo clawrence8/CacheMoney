@@ -19,7 +19,7 @@ public class WelcomePageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Firebase.setAndroidContext(this);
+        Firebase.setAndroidContext(getApplicationContext());
         //Firebase myFirebaseRef = new Firebase("https://buzz-movie-selector5.firebaseio.com/");
         //myFirebaseRef.child("user").setValue("clawrence8");
         setContentView(R.layout.activity_welcome_page);

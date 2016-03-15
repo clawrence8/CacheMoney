@@ -57,6 +57,13 @@
             android:name=".AdminActivity"
             android:label="@string/adminPage"
             android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".RecommendationActivity"
+            android:label="Recommended Movies"
+            android:parentActivityName=".HomePageActivity">
+
+        </activity>
     </application>
 
 </manifest>

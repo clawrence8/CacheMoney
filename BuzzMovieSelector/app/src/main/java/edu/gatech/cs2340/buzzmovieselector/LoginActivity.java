@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Firebase.setAndroidContext(LoginActivity.this);
         userManager = UserManager.getInstance();
 
         usernameBox = (EditText) findViewById(R.id.username);
@@ -134,30 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                                            }
 
         );
-        /*ref.authWithPassword(username, password, new Firebase.AuthResultHandler() {
-            @Override
-            public void onAuthenticated(AuthData authData) {
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("provider", authData.getProvider());
-                    if (authData.getProviderData().containsKey("username")) {
-                        map.put("username", authData.getProviderData().get("username").toString());
-                    }
-                    ref.child("users").child(authData.getUid()).setValue(map);
 
-                Log.i("login", "User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
-                Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onAuthenticationError(FirebaseError firebaseError) {
-                // there was an error
-                Log.e("login", "error", firebaseError.toException());
-                Toast.makeText(getApplicationContext(),
-                        firebaseError.toException().getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        }); end username auth */
 
     }
 

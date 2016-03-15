@@ -94,6 +94,7 @@ public class MovieActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         Intent intent = getIntent();
         final String movieId = intent.getStringExtra("id");
+        final String itemListPosterUrl = intent.getStringExtra("listUrl");
         setContentView(R.layout.activity_movie);
         url = "http://api.rottentomatoes.com/api/public/v1.0/movies/" + movieId + ".json?apikey=yedukp76ffytfuy24zsqk7f5";
 
@@ -147,6 +148,7 @@ public class MovieActivity extends AppCompatActivity {
                         m.setMovieLength(resp.optString("runtime"));
                         m.setMovieMpaRating(resp.optString("mpaa_rating"));
                         m.setMovieYear(resp.optString("year"));
+                        m.setMoviePoster(itemListPosterUrl);
                         mUserRatingTextView.setText("Average Rating: No user ratings yet");
                         mRatingTextView.setText("No user reviews yet. Leave one now!");
 
@@ -238,6 +240,7 @@ public class MovieActivity extends AppCompatActivity {
                     double avg = ratingSum / numReviews;
                     DecimalFormat df = new DecimalFormat("#.#");
                     mUserRatingTextView.setText("Average Rating: " + df.format(avg) + " stars");
+                    m.setAvgRating(avg);
 
                     m.addReview(newReview);
 
@@ -277,6 +280,7 @@ public class MovieActivity extends AppCompatActivity {
             this.bmImage = bmImage;
         }
 
+        @Override
         protected Bitmap doInBackground(String... urls) {
             String urldisplay = urls[0];
             Bitmap mIcon11 = null;
@@ -289,6 +293,7 @@ public class MovieActivity extends AppCompatActivity {
             }
             return mIcon11;
         }
+        @Override
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
