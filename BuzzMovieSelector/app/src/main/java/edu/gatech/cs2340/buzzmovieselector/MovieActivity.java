@@ -208,9 +208,77 @@ public class MovieActivity extends AppCompatActivity {
         //this actually queues up the async response with Volley
         queue.add(jsObjRequest);
 
-        /**
-         * This updates reviews and adds to database
-         */
+        User curr = UserManager.getInstance().getCurrentUser();
+        float givenStars = mRatingBar.getRating();
+        String starz = Float.toString(givenStars);
+        addReview();
+//        addReview(mComment.getText().toString(),curr.getUsername(),curr.getMajor(),starz);
+//        /**
+//         * This updates reviews and adds to database
+//         */
+//        mSubmitReview = (Button) findViewById(R.id.submit_review_button);
+//        mSubmitReview.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                double rating;
+//                float givenStars = mRatingBar.getRating();
+//                String comm = mComment.getText().toString();
+//                User curr = UserManager.getInstance().getCurrentUser();
+//                String currUsername = curr.getUsername();
+//                String currMajor = curr.getMajor();
+//                String s = Float.toString(givenStars);
+//
+//                if (comm.equals("")) {
+//                    Snackbar.make(findViewById(R.id.activity_movie_scrollview), "Please leave a comment", Snackbar.LENGTH_SHORT).show();
+//                } else if (mRatingBar.getRating() == 0.0) {
+//                    Snackbar.make(findViewById(R.id.activity_movie_scrollview), "Please submit a rating of at least one star", Snackbar.LENGTH_SHORT).show();
+//                } else {
+//
+//                    Map<String, String> newReview = new HashMap<String, String>();
+//                    newReview.put("username", currUsername);
+//                    newReview.put("major", currMajor);
+//                    newReview.put("numStars", s);
+//                    newReview.put("comment", comm);
+//
+//                    ratingSum += givenStars;
+//                    numReviews++;
+//                    double avg = ratingSum / numReviews;
+//                    DecimalFormat df = new DecimalFormat("#.#");
+//                    mUserRatingTextView.setText("Average Rating: " + df.format(avg) + " stars");
+//                    m.setAvgRating(avg);
+//
+//                    m.addReview(newReview);
+//
+//                    database.child("movies").child(m.getMovieId()).setValue(m);
+//
+//                    //review submission complete
+//                    Toast.makeText(MovieActivity.this, "Review submitted!", Toast.LENGTH_SHORT).show();
+//                    mComment.setText("");
+//                    mRatingBar.setRating(0F);
+//
+//                    if (mUsernameTextView.getText().equals("")) {
+//                        mRatingTextView.setText(s + " stars");
+//                        mCommentTextView.setText("\"" + comm + "\"");
+//                        mUsernameTextView.setText("User: " + currUsername);
+//                        mMajorTextView.setText("Major: " + currMajor);                    }
+//                }
+//            }
+//        });
+
+        mViewMoreCommentsButton = (Button) findViewById(R.id.view_more_comments_button);
+        mViewMoreCommentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    /**
+     * This updates reviews and adds to database
+     */
+    private void addReview()
+    {
         mSubmitReview = (Button) findViewById(R.id.submit_review_button);
         mSubmitReview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,15 +327,8 @@ public class MovieActivity extends AppCompatActivity {
                 }
             }
         });
-
-        mViewMoreCommentsButton = (Button) findViewById(R.id.view_more_comments_button);
-        mViewMoreCommentsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
+
 
     /**
      * This functions as an AsyncTask to download images to appear in our app's views
