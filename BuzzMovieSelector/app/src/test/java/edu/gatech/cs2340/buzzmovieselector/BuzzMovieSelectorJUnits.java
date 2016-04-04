@@ -1,8 +1,5 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
-
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -10,18 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
-    }
-
+public class BuzzMovieSelectorJUnits {
     //Clayton's JUnit
     @Test
     public void correctMovieCompare() {
