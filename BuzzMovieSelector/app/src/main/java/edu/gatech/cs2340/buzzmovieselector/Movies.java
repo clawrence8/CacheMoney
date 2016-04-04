@@ -23,7 +23,7 @@ public class Movies {
     /**
      *
      */
-    private static Map<String, User> moviesList = new HashMap<>();
+    private static Map<String, Movie> moviesList = new HashMap<>();
 
     public Movies() {
         ITEMS.clear();
@@ -36,8 +36,15 @@ public class Movies {
      */
 
     public static void addItem(Movie item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.getMovieName(), item);
+        if(!ITEMS.contains(item))
+        {
+            ITEMS.add(item);
+        }
+        if(!ITEM_MAP.containsKey(item.getMovieName()))
+        {
+            ITEM_MAP.put(item.getMovieName(), item);
+        }
+
     }
 
     public static void removeAll() {

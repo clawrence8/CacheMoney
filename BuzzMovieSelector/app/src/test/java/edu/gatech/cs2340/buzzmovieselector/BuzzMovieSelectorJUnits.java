@@ -39,8 +39,8 @@ public class BuzzMovieSelectorJUnits {
         assertTrue(a.compareTo(a) == 0);
 
     }
+
     //Hannah's JUnit
-    @Test
     public void checkMovieAddItem()
     {
         List<Movie> movieList = new ArrayList<>();
@@ -51,16 +51,13 @@ public class BuzzMovieSelectorJUnits {
         Movie movie3 = new Movie();
 
         movie1.setMovieName("Zootopia");
-        movieList.add(movie1);
-        movieItems.put(movie1.getMovieName(),movie1);
+        Movies.addItem(movie1);
 
         movie2.setMovieName("James Bond");
-        movieList.add(movie2);
-        movieItems.put(movie2.getMovieName(),movie2);
+        Movies.addItem(movie2);
 
         movie3.setMovieName("Zootopia");
-        movieList.add(movie3);
-        movieItems.put(movie3.getMovieName(),movie3);
+        Movies.addItem(movie3);
 
         assertTrue(movieList.contains(movie1));
         assertTrue(movieItems.containsKey(movie1.getMovieName()));

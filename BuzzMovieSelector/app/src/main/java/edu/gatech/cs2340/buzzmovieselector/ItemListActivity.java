@@ -221,21 +221,6 @@ public class ItemListActivity extends AppCompatActivity {
             holder.mMPAView.setText("Rated "+ mValues.get(position).getMovieMpaRating());
             holder.mYearView.setText(mValues.get(position).getMovieYear());
             new DownloadImageTask(holder.mPosterView).execute(mValues.get(position).getMoviePoster());
-
-
-
-            //for when you are clicking on the individual movie
-//            holder.mView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                    Context context = v.getContext();
-//                    Intent intent = new Intent(context, ItemDetailActivity.class);
-//                    intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, holder.mItem.getName());
-//
-//                        context.startActivity(intent);
-//                }
-//            });
         }
 
         @Override
