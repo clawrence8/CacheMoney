@@ -94,6 +94,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     Snackbar.make(findViewById(R.id.registration_scroll_view),
                             R.string.email_error, Snackbar.LENGTH_SHORT).show();
                 } else if (mMajor.equals("Chose Major:") || mMajor.equals("")) {
+                    //TODO fix error message
                     Snackbar.make(findViewById(R.id.registration_scroll_view),
                             R.string.email_error, Snackbar.LENGTH_SHORT).show();
                 } else {

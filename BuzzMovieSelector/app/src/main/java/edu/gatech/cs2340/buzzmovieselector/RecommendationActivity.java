@@ -134,6 +134,7 @@ public class RecommendationActivity extends AppCompatActivity {
      * Fetches movies for the user based on their major
      * @return an array of Movies sorted from highest rated to lowest rated
      */
+    //TODO make this method work for any major that the user selects
     public void fetchMovieRecs() {
 
         Firebase movieTable = UserManager.getInstance().getDatabase().child("movies");
