@@ -1,5 +1,7 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
+import android.app.Application;
+import android.app.Service;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -7,6 +9,7 @@ import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.core.Context;
 import com.firebase.client.snapshot.IndexedNode;
 import com.firebase.client.snapshot.Node;
 
@@ -18,11 +21,12 @@ import java.util.Map;
  */
 public class UserManager implements AuthenticationMeasure {
     private static UserManager ourInstance = null;
-    private static Map<String, User> usersList = new HashMap<>();
+    private Map<String, User> usersList = new HashMap<>();
     private User currentUser;
     private int userCount;
     private Firebase database = new Firebase("https://buzz-movie-selector5.firebaseio.com/");
     private Firebase userTable = new Firebase("https://buzz-movie-selector5.firebaseio.com/Users/");
+
 
     /**
      *Single usermanager for the entire application
@@ -142,6 +146,10 @@ public class UserManager implements AuthenticationMeasure {
         User u = findUserById(name);
         if (u == null) return false;
         return u.checkPassword(pass);
+    }
+
+    public Map<String, User> getUserList() {
+        return usersList;
     }
 
 }

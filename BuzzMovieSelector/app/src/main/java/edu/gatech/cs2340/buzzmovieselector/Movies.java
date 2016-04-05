@@ -53,4 +53,9 @@ public class Movies {
 
     }
 
+    public static boolean contains(Movie movie) {
+        return ITEMS.contains(movie);
+    }
+
+
 }
