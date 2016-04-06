@@ -1,6 +1,6 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
-import com.firebase.client.Firebase;
+//import com.firebase.client.Firebase;
 
 /**
  * Created by naudghebre on 2/5/16.
@@ -194,11 +194,12 @@ public class User {
 
     /**
      *
-     * @param loginAttempts sets the number of allowable attempts to log in
+     * adds a login attemps
      */
 
-    public void setLoginAttempts(int loginAttempts) {
-        this.loginAttempts = loginAttempts;
+    public void addLoginAttempts() {
+
+        this.loginAttempts = loginAttempts + 1;
     }
 
     /**

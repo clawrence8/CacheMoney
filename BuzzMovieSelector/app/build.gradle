@@ -40,4 +40,5 @@ dependencies {
     compile 'org.jetbrains:annotations:13.0'
     compile 'com.firebase:firebase-client-android:2.5.2+'
     //compile 'com.mcxiaoke.volley:library-aar:1.0.0'
+    androidTestCompile 'junit:junit:4.12'
 }

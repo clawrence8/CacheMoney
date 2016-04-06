@@ -40,6 +40,10 @@ public class Movies {
         ITEM_MAP.put(item.getMovieName(), item);
     }
 
+    /**
+     *  removes all the movies
+     */
+
     public static void removeAll() {
         ITEMS.clear();
         ITEM_MAP.clear();

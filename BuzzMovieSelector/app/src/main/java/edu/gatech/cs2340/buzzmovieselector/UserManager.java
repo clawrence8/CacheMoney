@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Created by SysAdmin on 2/16/16.
  */
-public class UserManager implements AuthenticationMeasure {
+public class UserManager {
     private static UserManager ourInstance = null;
     private static Map<String, User> usersList = new HashMap<>();
     private User currentUser;

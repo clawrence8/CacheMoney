@@ -22,6 +22,11 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+    }
+
     //Clayton's JUnit
     @Test
     public void correctMovieCompare() {
@@ -48,10 +53,10 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         assertTrue(a.compareTo(a) == 0);
 
     }
+
     //Hannah's JUnit
     @Test
-    public void checkMovieAddItem()
-    {
+    public void checkMovieAddItem() {
         List<Movie> movieList = new ArrayList<>();
         Map<String, Movie> movieItems = new HashMap<>();
 
@@ -61,15 +66,15 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
         movie1.setMovieName("Zootopia");
         movieList.add(movie1);
-        movieItems.put(movie1.getMovieName(),movie1);
+        movieItems.put(movie1.getMovieName(), movie1);
 
         movie2.setMovieName("James Bond");
         movieList.add(movie2);
-        movieItems.put(movie2.getMovieName(),movie2);
+        movieItems.put(movie2.getMovieName(), movie2);
 
         movie3.setMovieName("Zootopia");
         movieList.add(movie3);
-        movieItems.put(movie3.getMovieName(),movie3);
+        movieItems.put(movie3.getMovieName(), movie3);
 
         assertTrue(movieList.contains(movie1));
         assertTrue(movieItems.containsKey(movie1.getMovieName()));
@@ -80,4 +85,5 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         assertFalse(movieList.contains(movie3));
         assertFalse(movieItems.containsKey(movie3.getMovieName()));
     }
+
 }
