@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
+import org.jetbrains.annotations.TestOnly;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,11 +32,12 @@ public class BuzzMovieSelectorJUnits {
     @Before
     public void setup() {
         usersList = new HashMap<>();
+
         user1 = new User( "bob", "bBob", "bob@gmail.com", "ob", "CS",
                 "Male", "Marvel");
-        user2 = new User( "sally", "", "", "", "",
-                "", "");
-        user3 = null;
+
+        user2 = new User("Julia", "Jneuman", "julia@gatech.edu", "rightPassword", "CS",
+                "female", "skydiving");
 
         movieA = new Movie();
         movieB = new Movie();
@@ -44,6 +46,9 @@ public class BuzzMovieSelectorJUnits {
         movie1 = new Movie();
         movie2 = new Movie();
         movie3 = new Movie();
+
+        Context c = InstrumentationRegistry.getTargetContext();
+        
 
         //TODO see testValidUser method
         //manager = UserManager.getInstance();
@@ -75,8 +80,7 @@ public class BuzzMovieSelectorJUnits {
 
     //Hannah's JUnit
     @Test
-    public void checkMovieAddItem()
-    {
+    public void checkMovieAddItem() {
         movie1.setMovieName("Zootopia");
         Movies.addItem(movie1);
 
@@ -91,6 +95,21 @@ public class BuzzMovieSelectorJUnits {
         assertFalse(Movies.contains(movie3));
 
     }
+
+    //Julia's JUnit
+    @Test
+    public void checkUserCheckPassword() {
+
+        assertTrue(user1.checkPassword("ob"));
+        assertFale(user2.checkPassword("wrongPassword"));
+
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void checkNullPassword() {
+        user2.checkPassword("");
+    }
+
+
 
     //Chez's J-units
 
