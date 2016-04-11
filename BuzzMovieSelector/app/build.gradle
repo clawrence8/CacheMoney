@@ -5,6 +5,12 @@ android {
     buildToolsVersion "23.0.2"
     useLibrary 'org.apache.http.legacy'
 
+    testOptions {
+
+        unitTests.returnDefaultValues = true
+
+    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE-FIREBASE.txt'

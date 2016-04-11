@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.buzzmovieselector;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,10 +16,16 @@ import com.firebase.client.Firebase;
 
 
 public class WelcomePageActivity extends AppCompatActivity {
+    private static Context mContext;
+
+    public static Context getContext() {
+        return mContext;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getApplicationContext();
         Firebase.setAndroidContext(getApplicationContext());
         //Firebase myFirebaseRef = new Firebase("https://buzz-movie-selector5.firebaseio.com/");
         //myFirebaseRef.child("user").setValue("clawrence8");
